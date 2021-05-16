@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Анимация</title>
+    <link rel="stylesheet" href="../../../css/common-styles.css">
+    <link rel="stylesheet" href="../../../css/content-styles.css">
+</head>
+<body>
+
+    <!-- Содержимое начало -->
+    <!-- 
+        Для добавления форматированного блока кода использовать 
+        <pre data-formatted="js">code</pre>
+        сниппет - pref
+        
+        Для добавления справочного элемента использовать 
+         <span data-reference="Справочная информация">i</span>
+        сниппет - inf
+
+        Для добавления подзаголовка - subh
+        Для добавления текста - text
+        Для добавление внешней ссылки - olink
+        Для добавление ссылки маркера - mlink
+        Для добавления изображения - coimg
+    -->     
+    
+    <h2 class="content-header">Анимация</h2>
+    <h3 class="content-subheader">Кривые Безье
+        <a href="https://learn.javascript.ru/bezier-curve#itogo" class="marked-link" target="_blank">➥</a>
+    </h3>
+    <h3 class="content-subheader">CSS-анимации
+        <a href="https://learn.javascript.ru/css-animations#itogo" class="marked-link" target="_blank">➥</a>
+    </h3>  
+    <a href="http://cubic-bezier.com/" class="outside-link" target="_blank">
+        Кривые Безье
+    </a>
+    <pre data-formatted="css">
+    .circle {
+        transition: all 3s steps(3, start);     <span data-reference="steps(количество шагов[, start/end]) позволяет разделить анимацию на шаги.">i</span>
+    }</pre>
+    <pre data-formatted="js">
+    const coin = document.getElementById('coin');
+    let switcher = true;
+
+    function animate() {
+        if(switcher) {
+            coin.style.transform = 'rotate3d(0, 1, 0, 180deg)';
+            switcher = false;
+        } else {
+            coin.style.transform = 'rotate3d(0, 1, 0, 0deg)';
+            switcher = true;
+        }
+    }
+
+    coin.addEventListener('click', animate);
+    coin.addEventListener('transitionstart', e => {     <span data-reference="Событие срабатывает при начале анимации">i</span>
+        console.log(`Start, ${e.propertyName}`);        <span data-reference="e.propertyName - имя свойства, анимация которого началась">i</span>
+    });
+    coin.addEventListener('transitionend', e => {       <span data-reference="Событие срабатывает при окончании анимации">i</span>
+        console.log(`End, ${e.elapsedTime}`);           <span data-reference="e.elapsedTime - время (в секундах), которое заняла анимация, без учёта transition-delay">i</span>
+        animate();
+    });</pre>
+
+    <pre data-formatted="css">
+    @keyframes rotating {
+        0% {transform: rotate3d(0,1,0, 0deg);}
+        50% {transform: rotate3d(0,1,0, 180deg);}
+        0% {transform: rotate3d(0,1,0, 360deg);}
+        }
+    #coin {                
+        animation-name: rotating;
+        animation-duration: 1s;
+        animation-timing-function: ease-in-out;
+        animation-iteration-count: 10;
+    }</pre>
+
+    <h3 class="content-subheader">JavaScript-анимации
+        <a href="https://learn.javascript.ru/js-animation#itogo" class="marked-link" target="_blank">➥</a>
+    </h3>
+    <pre data-formatted="js">
+    let startTime = performance.now();                  <span data-reference="Получение времени, прошедшего с момента начала загрузки страницы в миллисекундах">i</span>
+
+    let requestId = requestAnimationFrame(time => {     <span data-reference="Вызов requestAnimationFrame планирует запуск функции callback на ближайшее время, когда браузер сочтёт возможным осуществить анимацию. time – время прошедшее с момента начала загрузки страницы в миллисекундах">i</span>
+        if(time < 10) {
+            element.style.width = '300px';
+        }
+    });
+
+    cancelAnimationFrame(requestId);                    <span data-reference="Значение requestId используется для отмены запланированной анимации">i</span></pre>
+
+    <h3 class="content-subheader">Шаблон функции для создания анимации</h3>
+    <pre data-formatted="js">
+    function animate({timing, draw, duration}) {            <span data-reference="duration – общая продолжительность анимации в миллисекундах. timing – функция вычисления прогресса анимации. Получает момент времени от 0 до 1, возвращает прогресс анимации, обычно тоже от 0 до 1. draw – функция отрисовки анимации.">i</span>
+        let start = performance.now();                      <span data-reference="Получить время запуска анимации">i</span>
+
+        requestAnimationFrame(function act(time) {          <span data-reference="Запланировать отрисовку части анимации">i</span>
+            let timeFraction = time - start / duration;     <span data-reference="Определить какая доля анимации должна быть проиграна от 0 до 1">i</span>
+            if(timeFraction > 1) {                          <span data-reference="Если эта доля больше 1, установить значение 1">i</span>    
+                timeFraction = 1;
+            }
+
+            let progress = timing(timeFraction);            <span data-reference="Вызвать временную функцию и определить долю прогресса анимации от 0 до 1 для текущей временной доли анимации">i</span>
+            draw(progress);                                 <span data-reference="Отрисовать анимацию, в соответствии с переданной долей прогресса">i</span>
+
+            if(timeFraction < 1) {                          <span data-reference="Если доля времени меньше 1 - анимация еще не завершена, запланировать следующую отрисовку анимации">i</span>
+                requestAnimationFrame(act);
+            }
+        });
+    }</pre>
+
+    <h3 class="content-subheader">Временные функции</h3>
+    <pre data-formatted="js">
+    // Линейная line
+    function timing(timeFraction) {
+        return timeFraction;
+    }
+
+    // Квадратичная quad
+    function timing(timeFraction) {
+        return Math.pow(timeFraction, 2);
+    }
+
+    // Кубическая cubic
+    function timing(timeFraction) {
+        return Math.pow(timeFraction, 3);
+    }
+
+    // Дуга circ
+    function timing(timeFraction) {
+        return 1 - Math.sin(Math.acos(timeFraction));
+    }
+
+    // Выстрел из лука back
+    function timing(timeFraction) {
+        let x = 1.5;
+        return Math.pow(timeFraction, 2) * ((x + 1) * timeFraction - x);
+    }
+
+    // Отскоки bounce 
+    function timing(timeFraction) {
+        for (let a = 0, b = 1, result; 1; a += b, b /= 2) {
+            if (timeFraction >= (7 - 4 * a) / 11) {
+                return -Math.pow((11 - 6 * a - 11 * timeFraction) / 4, 2) + Math.pow(b, 2)
+            }
+        }
+    }
+
+    // Эластичная 
+    function timing(timeFraction) {
+        let x = 1.5;
+        return Math.pow(2, 10 * (timeFraction - 1)) * Math.cos(20 * Math.PI * x / 3 * timeFraction)
+    }
+
+    // Обратная функция easeOut
+    function makeEaseOut(timing) {
+        return function(timeFraction) {
+            return 1 - timing(1 - timeFraction);
+        };
+    } 
+    
+    // Двойная функция easeInOut
+    function makeEaseInOut(timing) {
+        return function(timeFraction) {
+            if(timeFraction < 0.5) {
+                return timing(2 * timeFraction) / 2;
+            } else {
+                return (2-timing(2 * (1 - timeFraction))) / 2;
+            }
+        };
+    }</pre>
+
+
+    <!-- Содержимое конец -->
+
+    <!-- Панель навигации внутри фрейма -->
+    <div class="content-navigation">
+        <p class="section-indicator">Browser</p>   
+        <button class="navigation-button" id="navigation-back">◀</button>
+        <button class="navigation-button" id="navigation-reload">🗘</button>
+        <button class="navigation-button" id="navigation-next">▶</button>
+    </div>
+    <p id="reference-display"></p>
+    <script src="../../../js/content.js"></script> 
+</body>
+</html>

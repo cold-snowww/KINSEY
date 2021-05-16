@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript content</title>
+    <link rel="stylesheet" href="../../../css/common-styles.css">
+    <link rel="stylesheet" href="../../../css/content-styles.css">
+</head>
+<body>
+
+    <!-- Содержимое начало -->
+    <!-- 
+        Для добавления форматированного блока кода использовать 
+        <code><pre data-formatted="js">code</pre></code>
+        сниппет - pref
+        
+        Для добавления справочного элемента использовать 
+         <span data-reference="Справочная информация">i</span>
+        сниппет - inf
+
+        Для добавления подзаголовка - subh
+        Для добавления текста - text
+        Для добавление внешней ссылки - olink
+    -->     
+    
+    <h2 class="content-header">Методы работы с Promise</h2>
+    <h3 class="content-subheader">Создадим промисы и поместим их в массив:</h3>
+    <code><pre data-formatted="js">
+    let promise1 = new Promise((resolve, reject) => {   <span data-reference="Первый промис, задержка 3,2с">i</span>
+        setTimeout(() => resolve('Промис 1'), 3200);
+    });
+    
+    let promise2 = new Promise((resolve, reject) => {   <span data-reference="Второй промис, задержка 3,0с">i</span>
+        setTimeout(() => resolve('Промис 2'), 3000);
+    });
+    
+    let promise3 = new Promise((resolve, reject) => {   <span data-reference="Третий промис, задержка 2,6с">i</span>
+        setTimeout(() => resolve('Промис 3'), 2600);
+    });
+    
+    let promises = [promise1, promise2, promise3];      <span data-reference="Создаем массив промисов">i</span>
+    </pre></code>    
+
+    <h3 class="content-subheader">Методы работы с несколькими промисами:</h3>
+    <code><pre data-formatted="js">
+    Promise.all(promises)                                   <span data-reference="Promise.all получает массив промисов, и возвращает новый промис, который завершится когда завершатся все переданные промисы, и его результатом будет массив их результатов. Порядок элементов массива сохраняется. Если любой из промисов завершится с ошибкой, то промис, возвращённый Promise.all, немедленно завершается с этой ошибкой.">i</span>
+    .then(results => {                                      <span data-reference="then получает массив результатов">i</span>
+        results.forEach(result => console.log(result));
+    })
+    .catch(error => console.log(error.message));            <span data-reference="Если в одном из промисов ошибка - она будет поймана в catch">i</span>
+
+    Promise.allSettled(promises)                                <span data-reference="Promise.allSettled ждёт, пока все промисы завершатся и возвращает их результаты в виде массива с объектами содержащими свойства status/value, status/reason">i</span>
+    .then(results => {                                          <span data-reference="then получает массив с объектами результатов">i</span>
+        results.forEach(
+            result => {                
+                if(result.status == 'fulfilled') {              <span data-reference="Если промис выполнен успешно, свойство result.status == 'fulfilled', а в result.value результат выполнения">i</span>            
+                    console.log(`Выполнен: ${result.value}`);
+                } 
+                if(result.status == 'rejected') {               <span data-reference="Если промис выполнен с ошибкой, свойство result.status == 'rejected', а в result.reason объект ошибки">i</span>
+                    console.log(`Отклонен: ${result.reason}`);
+                }
+            }
+        );
+    });
+
+    Promise.race(promises)              <span data-reference="Promise.race ожидает первый выполненный промис, который становится его результатом, остальные игнорируются.">i</span>
+    .then(result => {
+        console.log(result);
+    })
+    .catch(error => {
+        console.log(result.message);
+    });
+
+    let resolvedPromis = Promise.resolve('result');             <span data-reference="Метод создает завершенный промис с результатом 'result'">i</span>
+    let rejectedPromis = Promise.reject(new Error('reject'));   <span data-reference="Метод создает отклоненный промис с ошибкой">i</span>
+    </pre></code>
+    <!-- Содержимое конец -->
+
+    <!-- Панель навигации внутри фрейма -->
+    <div class="content-navigation">
+        <p class="section-indicator">Javascript</p>   
+        <button class="navigation-button" id="navigation-back">◀</button>
+        <button class="navigation-button" id="navigation-reload">🗘</button>
+        <button class="navigation-button" id="navigation-next">▶</button>
+    </div>
+    <p id="reference-display"></p>
+    <script src="../../../js/content.js"></script> 
+</body>
+</html>

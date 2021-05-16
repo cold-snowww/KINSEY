@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../../css/common-styles.css">
+    <link rel="stylesheet" href="../../../css/content-styles.css">
+</head>
+<body>  
+   <!-- 
+        Для добавления форматированного блока кода использовать 
+         <code><pre data-formatted="js">code</pre></code>
+        сниппет - k-preform
+        
+        Для добавления справочного элемента использовать 
+         <span data-reference="Справочная информация">i</span>
+        сниппет - k-info
+
+        Для добавления подзаголовка - k-subheader
+        Для добавления текста - k-text
+        Для добавление внешней ссылки - k-outsidelink
+        Для добавление ссылки маркера - k-buttonlink
+        Для добавления изображения - k-img
+        Для добавления маркера внутри форматированного текста - k-textmark
+    -->    
+
+    <!-- Содержимое начало -->
+    
+    <h2 class="content-header">Статический сайт webpack.congig.js</h2>
+
+    <code><pre data-formatted="js">
+        const path = require('path');
+        const ejs = require('ejs');
+        const htmlPluginConfig = require('./htmlPluginConfig');
+
+        const src = path.resolve(__dirname, 'src');
+        const dist = path.resolve(__dirname, 'dist');
+
+        module.exports = {
+            mode: 'development',
+            context: src,
+            entry: src + '/index.js',
+            output: {
+                path: dist,
+                filename: '[name].js',
+                clean: true
+            },
+            devtool: 'source-map',  
+
+            module: {
+                rules: [
+                    {
+                        test: /\.js$/,
+                        exclude: /node_modules/,
+                        use: {
+                            loader: 'babel-loader',
+                            options: {
+                                presets: ['@babel/preset-env']
+                            }
+                        }
+                    },
+                    {
+                        test: /\.ejs$/,
+                        loader: 'html-loader',
+                        options: {
+                            preprocessor: (content, loaderContext) => {
+                                let result;
+
+                                try {
+                                    result = ejs.render(content, null, {
+                                        filename: src + '/html/index.ejs' 
+                                    });
+                                } catch (error) {
+                                    loaderContext.emitError(error);
+                                    return content;
+                                }
+
+                                return result;
+                            }
+                        }
+                    },
+                    {
+                        test: /\.s[ac]ss$/i,
+                        exclude: /node_modules/,
+                        use: [
+                            'style-loader',
+                            'css-loader',  
+                            {
+                                loader: 'postcss-loader',
+                                options: {
+                                    postcssOptions: {
+                                        plugins: [[
+                                            "postcss-preset-env",
+                                            {
+                                                stage: 0                                                       
+                                            }
+                                        ]]
+                                    }
+                                }
+                            },                                      
+                            'sass-loader'
+                        ]
+                    },
+                    {
+                        test: /\.(?:jpe?g|png|gif|svg|ico)$/i,
+                        type: 'asset/resource',
+                        generator: {
+                            filename: 'assets/img/[name][ext]'
+                        }
+                    }, 
+                    {
+                        test: /\.(?:woff2?|ttf|iot)$/i,
+                        type: 'asset/resource',
+                        generator: {
+                            filename: 'assets/fonts/[name][ext]'
+                        }
+                    }  
+                ]
+            },
+
+            plugins: htmlPluginConfig(src + '/html')
+        };
+    </pre></code>
+
+    <!-- Содержимое конец -->
+
+    <!-- Панель навигации внутри фрейма -->
+    <div class="content-navigation">
+        <p class="section-indicator">Javascript</p>   
+        <button class="navigation-button" id="navigation-back"></button>
+        <button class="navigation-button" id="navigation-reload"></button>
+        <button class="navigation-button" id="navigation-next"></button>
+    </div>
+    <p id="reference-display"></p>
+    <script src="../../../js/content.js"></script> 
+</body>
+</html>

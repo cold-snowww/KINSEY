@@ -1,0 +1,378 @@
+/* Header */
+.header-main {
+    display: flex;
+    align-items: center;
+    padding: var(--padding);
+    border-bottom: var(--border);
+    touch-action: none;
+}
+
+.header-logo {
+    height: 50px;
+}
+
+.header-title {
+    margin-left: 0.125em;
+    font-family: var(--noto);
+    font-size: 34px;
+    font-weight: 400;
+}
+.header-title::first-letter {
+    font-size: 0;
+}
+
+.header-text {
+    margin-left: auto;
+    font-size: 18px;
+    font-family: var(--play);
+}
+
+.header-text span {    
+    display: inline-block;
+    vertical-align: middle;
+    width: 30px;
+    height: 30px;
+    background-image: url(../img/icn/sprite.png);
+    background-size: cover;   
+    background-position-x: -90px;
+}
+
+.header-description {
+    border-bottom: var(--border);
+    font-size: 15px;
+    font-family: var(--mono);
+    text-align: center;
+    text-transform: uppercase;
+}
+
+/*Панели навигации */
+.interface-navigation,
+.content-links {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;    
+    border: var(--border);
+    font-family: var(--play);
+    background-color: var(--main-bg-color);
+    transition: left 0.3s linear 0.2s;    
+}
+
+.interface-navigation.closed {
+    left: 100%;
+    border: none;
+}
+
+.content-links.closed {
+    left: -100%;    
+    border: none;
+}
+
+.panel-header {  
+    position: absolute;  
+    left: 0;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;  
+    padding: 20px 25px 20px 10px;
+    border: var(--border);
+    background-color: var(--main-bg-color);         
+}
+
+.panel-title {   
+    font-size: 1.4rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.close-button {      
+    padding: 0.25em 0.325em;   
+    border: var(--border);    
+    vertical-align: middle;     
+}
+.close-button img {
+    height: 1.2rem;
+}
+.close-button:active {
+    transform: scale(1.1);
+}
+
+.links-list,
+.navigation-list {  
+    margin-top: 4rem;
+    height: calc(100% - 4rem);
+    /* overflow-y: auto; */
+}
+
+.navigation-button,
+.content-link {
+    display: block;
+    width: 100%;
+    padding: 0.48em 0.8em;
+    border-bottom: var(--border);
+    border-bottom-style: dashed;
+    font-size: 0.875rem;   
+    text-align: left;    
+}
+.interface-navigation .navigation-list li:active,
+.content-link:active {
+    color: var(--main-bg-color);
+    background-color: var(--main-color);
+}
+
+/* Вложенный список ссылок */
+
+.nested-list-header {
+    position: relative;
+    padding: 0.625em 0.8em 0.5em 0.8em;   
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: uppercase;  
+    cursor: pointer;  
+}
+
+.links-list li:first-of-type .nested-list-header {
+    border-top-width: 0;
+}
+
+
+
+.nested-list-header::before {
+    content: '\003E';
+    display: inline-block;
+    margin-right: 0.5em;
+    transform: rotate(90deg);
+    transition: transform 0.3s ease-out;    
+}
+
+.nested-list-header.closed::before {
+    transform: none;
+}
+
+.nested-list-header ~ li {
+    opacity: 1;
+    transform: none;
+    transition: all 0.3s ease-out 0.1s;    
+}
+
+.nested-list-header.closed ~ li {    
+    display: none;
+    opacity: 0;
+    transform: translateX(5%);
+}
+
+/* Основное содержимое */
+.interface-content {
+    display: flex;
+    flex-direction: column;
+}
+.content-frame-wrapper {    
+    flex: 1 1 auto;
+    position: relative;
+}
+
+.content-frame {    
+    position: absolute;
+    border: none;
+    width: 100%;
+    height: 100%;    
+}
+
+/* Footer */
+.interface-footer {    
+    border-top: var(--border);
+    font-size: 15px;
+    font-family: var(--mono);
+    text-align: center;
+    text-transform: uppercase;
+}
+
+/* Адаптация под разные размеры дисплеев */
+
+@media screen and (min-width: 450px) and (max-width: 799px) {
+    .navigation-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;        
+        align-content: flex-start;        
+    }
+
+    .navigation-list li {
+        margin: 40px 30px 0 30px;        
+    }
+
+    .navigation-button {
+        font-size: 1.2rem;
+        border: var(--border);
+    }
+}
+
+@media screen and (min-width: 800px) {
+    .interface-content {  
+        flex-direction: row;            
+        overflow-y: hidden;      
+    }
+
+    .header-text span {
+        background-position-x: -120px;
+    }
+
+    /* Панель навигации со ссылками */
+
+    .content-links,
+    .content-links.closed {        
+        position: relative;
+        left: auto;
+        top: auto;
+        flex: 0 0 300px;                       
+    }
+
+    .content-links .close-button {
+        display: none;
+    }
+
+    .content-links .panel-header {
+        position: absolute;
+        border: none; 
+        border-bottom: var(--border);               
+    }
+
+    .links-list {        
+        margin-top: 3.9375rem;        
+        height: calc(100% - 3.9375rem);
+        overflow-y: auto;              
+    }
+
+    /* Основная панель навигации */
+    .interface-navigation {
+        max-width: 300px;
+        left: auto;
+        right: 0;
+    }
+
+    /* Основное содержимое */
+    .content-frame-wrapper {
+        flex: 1 1 auto;    
+        border-left: var(--border);    
+    }
+}
+
+@media screen and (min-width: 1000px) {
+    .interface-wrapper {
+        max-width: 1080px;
+        margin: 0 auto;
+    }
+
+    /* Header */
+    .interface-header {
+        display: flex;
+        position: relative;        
+        padding: var(--padding);
+        border-bottom: var(--border);
+    }
+    .header-main {
+        align-items: flex-start;
+        padding: 0;
+        border: none;
+    }
+    .header-logo {
+        height: 100px;
+    }
+    .header-title {
+        padding-top: 16px;
+        font-size: 42px;
+        font-weight: 700;
+    }
+    .header-text {
+        display: none;
+    }
+    .header-description {
+        margin-left: auto;
+        padding-top: 14px;
+        border: none;
+        font-size: 1rem;
+        font-family: var(--play);
+    }
+    /* Панель навигации */
+    .interface-navigation,
+    .interface-navigation.closed {
+        max-width: 100%;
+        height: auto;
+        left: auto;
+        top: auto;
+        right: 20px;
+        bottom: -5px;
+        width: auto;  
+        background-color: transparent;      
+    }
+    .interface-navigation .panel-header {
+        display: none;
+    }
+    .interface-navigation .navigation-list {
+        display: flex;
+        align-items: center;
+        width: auto;
+        padding-left: 1rem;
+        border: none;
+        overflow: hidden;
+    }
+    .interface-navigation .navigation-list li{
+        margin-right: 0.25rem;
+        border: var(--border);
+        transform: skewX(-10deg);
+        background-color: var(--main-bg-color);
+    }
+    .navigation-button {     
+        border: none;   
+        font-size: 1rem;
+        font-weight: 700;
+        transform: skewX(10deg);
+    }
+
+    /* Панель ссылок */
+    .content-links .panel-header {        
+        position: static;
+        padding: 8px;
+    }
+
+    .content-links .panel-title {        
+        font-size: 1.25rem;
+    }
+
+    .content-links .links-list {
+        margin-top: 0;
+        height: calc(100% - 37px);
+    }
+
+    .content-link {
+        border-bottom: none;
+        font-size: 1rem;
+        font-style: italic;
+    }    
+
+    /* Footer */
+    .interface-footer {
+        display: flex;
+        justify-content: center;
+        align-items: baseline;
+        padding: 15px 0;
+        font-family: var(--play);
+        font-size: 0.875rem;
+    }
+    .interface-footer p:last-of-type {
+        margin-left: 1rem;
+    }
+
+    @media (hover: hover) {
+        .content-link:hover,
+        .interface-navigation .navigation-list li:hover {
+            background-color: var(--main-color);
+            color: var(--main-bg-color);
+        }
+    }
+}
+

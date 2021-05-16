@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript content</title>
+    <link rel="stylesheet" href="../../../css/common-styles.css">
+    <link rel="stylesheet" href="../../../css/content-styles.css">
+</head>
+<body>
+
+    <!-- Содержимое начало -->
+    <!-- 
+        Для добавления форматированного блока кода использовать 
+        <code><pre data-formatted="js">code</pre></code>
+        сниппет - pref
+        
+        Для добавления справочного элемента использовать 
+         <span data-reference="Справочная информация">i</span>
+        сниппет - inf
+
+        Для добавления подзаголовка - subh
+        Для добавления текста - text
+        Для добавление внешней ссылки - olink
+    -->     
+    
+    <h2 class="content-subheader">Граница слова: \b
+        <a href="https://learn.javascript.ru/regexp-boundary" class="marked-link" target="_blank">➥</a>
+    </h2>
+    <pre data-formatted="js">
+    let regExp = /\bJava\b/g;   <span data-reference="Проверка \b - обозначает границу слова. Граница слова не работает для алфавитов, основанных не на латинице">i</span></pre>    
+
+    <!-- Содержимое конец -->
+
+    <!-- Панель навигации внутри фрейма -->
+    <div class="content-navigation">
+        <p class="section-indicator">Javascript</p>   
+        <button class="navigation-button" id="navigation-back">◀</button>
+        <button class="navigation-button" id="navigation-reload">🗘</button>
+        <button class="navigation-button" id="navigation-next">▶</button>
+    </div>
+    <p id="reference-display"></p>
+    <script src="../../../js/content.js"></script> 
+</body>
+</html>

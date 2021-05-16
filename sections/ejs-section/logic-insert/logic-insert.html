@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../../css/common-styles.css">
+    <link rel="stylesheet" href="../../../css/content-styles.css">
+</head>
+<body>  
+   <!-- 
+        Для добавления форматированного блока кода использовать 
+         <code><pre data-formatted="js">code</pre></code>
+        сниппет - k-preform
+        
+        Для добавления справочного элемента использовать 
+         <span data-reference="Справочная информация">i</span>
+        сниппет - k-info
+
+        Для добавления подзаголовка - k-subheader
+        Для добавления текста - k-text
+        Для добавление внешней ссылки - k-outsidelink
+        Для добавление ссылки маркера - k-buttonlink
+        Для добавления изображения - k-img
+        Для добавления маркера внутри форматированного текста - k-textmark
+    -->    
+
+    <!-- Содержимое начало -->
+    
+    <h2 class="content-header">Внедрение логики</h2>
+
+    <code><pre data-formatted="text">
+        Внедрение логики:
+
+        ˇ&lt;% if(true) { %&gt;ˇ                    <span data-reference="Кусок кода будет вставлен только при истинности условия">i</span>
+            &lt;p&gt;Yay it's true!&lt;/p&gt;
+        ˇ&lt;% } %&gt;ˇ
+
+        Комбинирование логики с вставкой переменных:
+
+        ˇ&lt;%ˇ let name = John;                    <span data-reference="Логический блок, в котором объявлена переменная name">i</span>
+           if(true) {
+              name += 'Doe'
+           } ˇ%&gt;ˇ
+        
+        &lt;p&gt;ˇ&lt;%= name %&gt;ˇ&lt;/p&gt;                     <span data-reference="Вставка переменной, обработанной в предыдущем блоке">i</span>
+
+        *Логический блок выделяется ˇ&lt;%ˇ и ˇ%&gt;ˇ целиком,
+        не смотря на разрывы строк, прерываясь только если в нем 
+        происходит вставка кода с использованием ˇ&lt;%=ˇ или ˇ&lt;%-ˇ
+    </pre></code>
+
+    <!-- Содержимое конец -->
+
+    <!-- Панель навигации внутри фрейма -->
+    <div class="content-navigation">
+        <p class="section-indicator">Javascript</p>   
+        <button class="navigation-button" id="navigation-back"></button>
+        <button class="navigation-button" id="navigation-reload"></button>
+        <button class="navigation-button" id="navigation-next"></button>
+    </div>
+    <p id="reference-display"></p>
+    <script src="../../../js/content.js"></script> 
+</body>
+</html>

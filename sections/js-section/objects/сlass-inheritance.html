@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript content</title>
+    <link rel="stylesheet" href="../../../css/common-styles.css">
+    <link rel="stylesheet" href="../../../css/content-styles.css">
+</head>
+<body>
+
+    <!-- Содержимое начало -->
+    <!-- 
+        Для добавления форматированного блока кода использовать 
+        <code><pre data-formatted="js">code</pre></code>
+        сниппет - pref
+        
+        Для добавления справочного элемента использовать 
+         <span data-reference="Справочная информация">i</span>
+        сниппет - inf
+
+        Для добавления подзаголовка - subh
+        Для добавления текста - text
+        Для добавление внешней ссылки - olink
+    -->     
+    
+    <h2 class="content-header">Наследование классов</h2>
+    <code><pre data-formatted="js">
+    class User {                            <span data-reference="Базовый класс, описание кода смотри раздел Классы">i</span>
+        static company = 'Black Mesa';
+        static #planet = 'Mars';
+        city = 'Galifax';
+        #age = 0;
+    
+        constructor(name, surname) {
+            this.name = name;
+            this.surname = surname;
+            this.#age = 18;
+        }
+    
+        get age() {
+            return this.#age;
+        }
+        set age(num) {
+            this.#age = num;
+        }
+    
+        static compare(userA, userB) {
+            return userA.#age - userB.#age;
+        }
+        static getSecret() {
+            return `We're from ${this.#planet}!`;
+        }
+        static readUser(user) {
+            return `${user.name} ${user.surname}`;
+        }
+    
+        id() {
+            return `I'm ${this.name}, ${this.#age} y.o.`;
+        }
+    }
+    
+    class Proger extends User {                                 <span data-reference="Класс Proger наследует от класса User (расширяет класс User)">i</span>
+        constructor(name, surname, isBusy) {                    <span data-reference="Переопределение конструктора">i</span>
+            super(name, surname);                               <span data-reference="При переопределении конструктора сначала нужно вызвать конструктор  родительского класса">i</span>
+            this._isBusy = isBusy;                              <span data-reference="_isSlave – эмуляция приватного свойства">i</span>
+        }
+    
+        static readUser(user) {                                 <span data-reference="Переопределение статического метода родительского класса">i</span>
+            if(user._isBusy) {
+                return super.readUser(user) + ' I\'m busy!';    <span data-reference="Вызов оригинального родительского метода">i</span>       
+            } else {
+                return super.readUser(user) + ' I\'m free!';
+            }
+        }
+    
+        id() {                                                  <span data-reference="Переопределение родительского метода экземпляров класса">i</span>
+            return super.id() + ` busy: ${this._isBusy}`;
+        }
+    
+        liberator() {                                           <span data-reference="Собственный метод экземпляров дочернего класса">i</span>
+            this._isBusy = !this._isBusy;
+        }
+    }
+    
+    let jonnyUser   = new User('John', 'Smith');                <span data-reference="Создание экземпляра User">i</span>
+    let billyProger = new Proger('Billy', 'Boy', true);         <span data-reference="Создание экземпляра Proger">i</span>
+    </pre></code>    
+
+    <h3 class="content-subheader">Структура полученных объектов:</h3>
+    <img class="content-img" src="../../../img/sections-img/js-section/class-structure.png" alt="Структура созданных объектов">
+    <p class="content-text">Встроенные классы – исключение. Они не наследуют статические методы друг друга, Array[[Prototype]] не ссылается на Object!</p>
+
+    <h3 class="content-subheader">Использование методов и свойств:</h3>
+    <code><pre data-formatted="js">
+    console.log(Proger.company);                            <span data-reference="Доступ к свойству родительского класса. Свойство будет найдено в User">i</span>
+    console.log(Proger.compare(billyProger, jonnyUser));    <span data-reference="Сравнение экземпляров с помощью метода из родительского класса User">i</span>
+    console.log(Proger.getSecret());                        <span data-reference="Ошибка доступа к User.#planet. Так как приватное свойство объявлено в User, доступ к нему возможен только через класс User">i</span>
+    console.log(Proger.readUser(billyProger));              <span data-reference="Использование переопределенного метода для работы с экземпляром класса">i</span>
+    
+    console.log(billyProger.age);                           <span data-reference="Доступ к свойству #age, через геттер, который находится в User.prototype">i</span>
+    billyProger.age = 32;                                   <span data-reference="Изменение собственного приватного поля #age сеттером из User.prototype">i</span>
+    console.log(billyProger.city);                          <span data-reference="Собственное св-во экземпляра, обявленное в родительском классе User">i</span>
+    billyProger.liberator();                                <span data-reference="Использование метода из Proger.prototype">i</span>
+    console.log(billyProger.id());                          <span data-reference="Использование переопределенного метода из Proger.prototype">i</span>
+    </pre></code>
+    <!-- Содержимое конец -->
+
+    <!-- Панель навигации внутри фрейма -->
+    <div class="content-navigation">
+        <p class="section-indicator">Javascript</p>   
+        <button class="navigation-button" id="navigation-back">◀</button>
+        <button class="navigation-button" id="navigation-reload">🗘</button>
+        <button class="navigation-button" id="navigation-next">▶</button>
+    </div>
+    <p id="reference-display"></p>
+    <script src="../../../js/content.js"></script> 
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript content</title>
+    <link rel="stylesheet" href="../../../css/common-styles.css">
+    <link rel="stylesheet" href="../../../css/content-styles.css">
+</head>
+<body>
+
+    <!-- Содержимое начало -->
+    <!-- 
+        Для добавления форматированного блока кода использовать 
+        <code><pre data-formatted="js">code</pre></code>
+        сниппет - pref
+        
+        Для добавления справочного элемента использовать 
+         <span data-reference="Справочная информация">i</span>
+        сниппет - inf
+
+        Для добавления подзаголовка - subh
+        Для добавления текста - text
+        Для добавление внешней ссылки - olink
+    -->     
+    
+    <h2 class="content-header">Массивы</h2>
+    <code><pre data-formatted="js">
+    let array = ['red', 'green', 'black'];                  <span data-reference="Создание массива">i</span>
+
+    let result = array.push('blue');                        <span data-reference="Добавление элемента в конец массива, возвращает длинну нового массива">i</span>
+    result = array.pop();                                   <span data-reference="Удаление элемента с конца массива, возвращает удаленный элемент">i</span>
+    result = array.unshift('grey');                         <span data-reference="Добавление элемента в начало массива, возвращает длинну нового массива">i</span>
+    result = array.shift();                                 <span data-reference="Удаление элемента из начала массива, возвращает удаленный элемент">i</span>
+    
+    result = array.splice(1, 2);                            <span data-reference="Вырезает 2 элемента массива начиная с индекса 1. Возвращает массив вырезанных элементов">i</span>
+    result = array.splice(-2, 0, 'orange');                 <span data-reference="Вырезает 0 элементов с индекса -2, и вставляет 'orange' на это место. Возвращает массив вырезанных элементов">i</span>
+    result = array.slice(1, 3);                             <span data-reference="Возвращает новый массив из элементов 1 (включительно) - 3 (не включительно) массива array">i</span>
+    array.concat(['orange', 'grey'], 'yellow');             <span data-reference="Добавляет новые элементы в массив array">i</span>
+    
+    result = array.indexOf('green');                        <span data-reference="Находит индекс элемента - 1">i</span>
+    result = array.lastIndexOf('red');                      <span data-reference="То же, только поиск с конца - 2">i</span>
+    result = array.includes('black');                       <span data-reference="Проверяет наличие элемента - false">i</span>
+    
+    array.reverse();                                        <span data-reference="Меняет порядок исходного массива на обратный">i</span>
+    result = array.join('-');                               <span data-reference="Склеивает элементы массива в строку">i</span>
+    array.length = 0;                                       <span data-reference="Отчистка массива">i</span>
+    result = Array.isArray(array);                          <span data-reference="Проверка объекта на массив - true ">i</span>
+    result = Array.from(obj);                               <span data-reference="Преобразует итерируемый объект или  псевдомассив в массив, поддерживает доп. аргументы mapFn и thisArg">i</span>    
+
+    let result = array.find(                                <span data-reference="Возвращает элемент массива когда функция колбэк вернет true">i</span>
+        (item, index, array) => {
+            if(item == 'green') return true;
+        }
+    );
+
+    result = array.findIndex(                               <span data-reference="Возвращает индекс элемента массива когда функция колбэк вернет true">i</span>      
+        (item, index, array) => {
+            if(item == 'green') return true;
+        }
+    );
+
+    result = array.filter(                                  <span data-reference="Возвращает массив элементов, на которых функция колбэк вернет true">i</span>
+        (item, index, array) => {
+            if(item == 'red') return true;
+        }
+    );
+
+    array.forEach(                                          <span data-reference="Выполняет функцию колбэк для каждого элемента массива">i</span>
+        (item, index, array) => {
+            console.log(`Element: ${item} on: ${index}`);   
+        }
+    );
+
+    result = array.map(                                     <span data-reference="Выполняет действие с каждым элементом массива, возвращает новый массив результатов">i</span>
+        (item, index, array) => {
+            return `color-${item}`;
+        }
+    );
+
+    array.sort();                                           <span data-reference="Сортировка исходного массива по unicode (включая цифры!). Функция изменяет исходный массив!">i</span>
+
+    array.sort(                                             <span data-reference="Расширенная сортировка массива">i</span>
+        (firstElement, secondElement) => {
+            if(firstElement > secondElement) return 1;      <span data-reference="Если значение больше следующего нужно вернуть положительное число">i</span>
+            if(firstElement < secondElement) return -1;     <span data-reference="Если значение меньше следующего нужно вернуть отрицательное число">i</span>
+            if(firstElement == secondElement) return 0;     <span data-reference="Если значение равно следующиму нужно вернуть 0">i</span>
+        }
+    );
+
+    array.sort(                                             <span data-reference="Сокращенная запись сортировки по возростанию">i</span>
+        (a, b) => a - b
+    );
+
+    result = array.reduce(                                  <span data-reference="Расчет значения на основе массива, prev – результат предыдущей итерации. Второй аргумент - начальное значение prev - 'initial'">i</span>
+        (prev, item, index, array) => {
+            prev = prev + ' ' + item;
+            return prev;
+        }, 'initial'
+    );
+
+    result = array.reduceRight(                             <span data-reference="Аналогично предыдущему но с конца массива">i</span>
+        (prev, item, index, array) => {
+            prev = prev + ' ' + item;
+            return prev;
+        }, 'initial'
+    );
+
+    for(let i = 0; i < array.length; i++) {                 <span data-reference="Цикл for для перебора элементов массива">i</span>
+        console.log(array[i]);
+    }
+
+    for(let i of array) {                                   <span data-reference="Цикл for-of для перебора элеменов массива">i</span>
+        console.log(i);
+    }</pre></code>
+
+    <a href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Array" class="outside-link" target="_blank">
+        Свойства и методы Array на MDN
+    </a>
+
+    <!-- Содержимое конец -->
+
+    <!-- Панель навигации внутри фрейма -->
+    <div class="content-navigation">
+        <p class="section-indicator">Javascript</p>   
+        <button class="navigation-button" id="navigation-back">◀</button>
+        <button class="navigation-button" id="navigation-reload">🗘</button>
+        <button class="navigation-button" id="navigation-next">▶</button>
+    </div>
+    <p id="reference-display"></p>
+    <script src="../../../js/content.js"></script> 
+</body>
+</html>

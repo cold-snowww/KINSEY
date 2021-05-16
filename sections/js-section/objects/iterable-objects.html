@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript content</title>
+    <link rel="stylesheet" href="../../../css/common-styles.css">
+    <link rel="stylesheet" href="../../../css/content-styles.css">
+</head>
+<body>
+
+    <!-- Содержимое начало -->
+    <!-- 
+        Для добавления форматированного блока кода использовать 
+        <code><pre data-formatted="js">code</pre></code>
+        сниппет - pref
+        
+        Для добавления справочного элемента использовать 
+         <span data-reference="Справочная информация">i</span>
+        сниппет - inf
+
+        Для добавления подзаголовка - subh
+        Для добавления текста - text
+        Для добавление внешней ссылки - olink
+    -->     
+    
+    <h2 class="content-header">Создание итерируемых объектов</h2>
+    <code><pre data-formatted="js">
+    let range = {                                       <span data-reference="Итерируемый объект">i</span>
+        from: 1,
+        to: 8,
+    
+        [Symbol.iterator]() {                           <span data-reference="При итерации обьекта вызывается метод Symbol.iterator">i</span>
+            return {                                    <span data-reference="Метод Symbol.iterator должен возвращать объект-итератор, содержащий метод next">i</span>
+                current: this.from,
+                last: this.to,
+    
+                next() {                                <span data-reference="При каждой итерации цикла, вызывается метод next">i</span>
+                    if(this.current <= this.last) {
+                        return {                        <span data-reference="Метод next в качестве результата возвращает объект со свойством value, значение которого передается в текущую итерацию цикла">i</span>
+                            done: false,
+                            value: this.current++
+                        };
+                    } else {                            
+                        return {done: true};            <span data-reference="Возврат обьекта со свойством done: true завершает текущий цикл">i</span>
+                    }
+                }
+            };
+        }
+    };
+    </pre></code>    
+
+    <h3 class="content-subheader">С использованием генераторов:</h3>
+    <code><pre data-formatted="js">    
+    let range = {                                           <span data-reference="Итерируемый объект">i</span>
+        from: 1,
+        to: 8, 
+
+        *[Symbol.iterator]() {                              <span data-reference="функция генератор по умолчанию возвращает объект-итератор, содержащий метод next">i</span>
+            for(let i = this.from; i <= this.to; i++) {     <span data-reference="При вызове метода next объекта-итератора, оператор yield возвращает значение. Значение также оборачивается в объект со свойствами value и done">i</span>
+                yield i;
+            }
+        }
+    };
+    </pre></code>
+    <!-- Содержимое конец -->
+
+    <!-- Панель навигации внутри фрейма -->
+    <div class="content-navigation">
+        <p class="section-indicator">Javascript</p>   
+        <button class="navigation-button" id="navigation-back">◀</button>
+        <button class="navigation-button" id="navigation-reload">🗘</button>
+        <button class="navigation-button" id="navigation-next">▶</button>
+    </div>
+    <p id="reference-display"></p>
+    <script src="../../../js/content.js"></script> 
+</body>
+</html>

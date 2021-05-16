@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript content</title>
+    <link rel="stylesheet" href="../../../css/common-styles.css">
+    <link rel="stylesheet" href="../../../css/content-styles.css">
+</head>
+<body>
+
+    <!-- Содержимое начало -->
+    <!-- 
+        Для добавления форматированного блока кода использовать 
+        <code><pre data-formatted="js">code</pre></code>
+        сниппет - pref
+        
+        Для добавления справочного элемента использовать 
+         <span data-reference="Справочная информация">i</span>
+        сниппет - inf
+
+        Для добавления подзаголовка - subh
+        Для добавления текста - text
+        Для добавление внешней ссылки - olink
+    -->     
+    
+    <h2 class="content-header">Порядок запуска</h2>
+    <h3 class="content-subheader">HTML:</h3>    
+    <code><pre data-formatted="html">
+        &lt;script nomodule&gt;
+            alert('Your browser is too OLD!')
+        &lt;/script&gt;
+        
+        &lt;script src="./js/modulTwo.js" type="module"&gt;&lt;/script&gt;
+        &lt;script src="./js/modulOne.js" type="module"&gt;&lt;/script&gt;
+        
+        &lt;script async src="./js/modulThree.js type="module"&gt;&lt;/script&gt;
+        
+        &lt;script src="./js/mainScript.js"&gt;&lt;/script&gt;
+        
+        &lt;script src="./js/mainScript.js"&gt;&lt;/script&gt;
+    </pre></code>   
+    
+    <ol class="content-list">
+        <li>
+            Современные браузеры поддерживающие модули игнорируют <span class="code-orange">script</span>
+            <span class="code-orange">nomodule</span> в строке <span class="code-red">1</span>.
+            Запуск кода <span class="code-green">modulThree</span> строка <span class="code-red">8</span>,
+            так как он асинхронный, и не ждет пока браузер обработает код страницы и дойдет до 
+            <span class="code-green">mainScript</span>. В коде: <span class="code-orange">alert('modulThree')</span>;
+        </li>
+        <li>
+            Запуск кода <span class="code-green">mainScript</span>, строка <span class="code-red">10</span>.
+            Не является модулем, и обрабатывается синхронно по ходу размещения в коде HTML. В коде 
+            <span class="code-orange">alert('mainScript')</span>;
+        </li>
+        <li>
+            Запуск кода <span class="code-green">modulTwo</span> строка <span class="code-red">5</span>,
+            для всех модулей выполняется в отложенном режиме <span class="code-orange">(defer)</span>, после
+            обработки HTML и CSS, в порядке их размещения в HTML. В строке <span class="code-red">1</span> 
+            <span class="code-green">modulTwo</span> инструкция импорта из <span class="code-green">modulOne</span>.
+        </li>
+        <li>Запуск кода <span class="code-green">modulOne</span> по ссылке из предыдущего пункта. Экспорт строчек
+            <span class="code-red">1, 5</span>. Вызов <span class="code-orange">alerta</span> из строки
+            <span class="code-red">9</span>. Добавление свойства <span class="code-orange">surname</span> к
+            экспортированному ранее обьекту <span class="code-orange">admin</span> в строке
+            <span class="code-red">10</span>, обьявление внутренней переменной в строке <span class="code-red">11</span>.
+        </li>
+        <li>
+            Возврат к строке <span class="code-red">1</span> <span class="code-green">moduleTwo</span>.
+            Импорт <span class="code-orange">sayHi</span> и <span class="code-orange">admin</span>, экспортированных в
+            пункте <span class="code-red">4</span>. Запуск кода <span class="code-green">modulFour</span> 
+            не обьявленного в HTML по ссылке импорта в строке <span class="code-red">3</span>.
+        </li>
+        <li>
+            Экспорт функции <span class="code-orange">greeting</span> из строки <span class="code-red">1</span> 
+            <span class="code-green">moduleFour</span>. Запуск <span class="code-orange">alerta</span> из строки 
+            <span class="code-red">7</span>.
+        </li>
+        <li>
+            Возврат к строке <span class="code-red">3</span> <span class="code-green">modulTwo</span>,
+            импорт <span class="code-orange">greeting</span>. Запуск <span class="code-orange">alerta</span> в строке
+            <span class="code-red">5</span>. Выполнение кода модуля в строках <span class="code-red">6-14</span>.
+        </li>
+        <li>
+            Выполнение завершено, так как все последующие модули уже были выполнены по ссылкам из 
+            инструкций импорта, а код модуля выполняется только один раз (даже если в HTML 
+            встречается больше одного раза).
+        </li>
+    </ol>    
+
+    <h3 class="content-subheader">modulTwo:</h3>
+    <code><pre data-formatted="js">
+    import {sayHi} from './modulOne';       <span data-reference="Инструкции импорта, адрес начинается с ./ даже если файлы в одной папке">i</span>
+    import {admin} from './modulOne';
+    import {greeting} from './modulFour';
+    
+    alert('modulTwo.js');
+    
+    sayHi('Roman');
+    alert(admin.surname);
+    
+    alert(import.meta.url);
+    alert(this);
+    
+    let variable = 'v';
+    greeting();
+    </pre></code>
+
+    <h3 class="content-subheader">modulOne:</h3>
+    <code><pre data-formatted="js">
+    export function sayHi(user) {
+        alert(`Hello ${user}`);
+    }
+    
+    export let admin = {
+        name: 'John'
+    };
+    
+    alert('modulOne.js');
+    admin.surname = 'Snow';
+    let variable = 'v';
+    </pre></code>
+
+    <h3 class="content-subheader">modulFour:</h3>
+    <code><pre data-formatted="js">
+    export {greeting}
+
+    function greeting() {
+        alert('Hi from modul four!');
+    }
+
+    alert('modulFour.js')
+    </pre></code>
+
+    <h3 class="content-subheader">Старые браузеры:</h3>
+    <p class="content-text">
+        Старые браузеры не поддерживают <span class="code-orange">type="module"</span>, поэтому при 
+        обработке HTML в них синхронно по ходу обработки HTML происходит запуск 
+        <span class="code-orange">script nomodule</span>, a затем <span class="code-green">mainScript</span>. 
+    </p>
+    <!-- Содержимое конец -->
+
+    <!-- Панель навигации внутри фрейма -->
+    <div class="content-navigation">
+        <p class="section-indicator">Javascript</p>   
+        <button class="navigation-button" id="navigation-back">◀</button>
+        <button class="navigation-button" id="navigation-reload">🗘</button>
+        <button class="navigation-button" id="navigation-next">▶</button>
+    </div>
+    <p id="reference-display"></p>
+    <script src="../../../js/content.js"></script> 
+</body>
+</html>

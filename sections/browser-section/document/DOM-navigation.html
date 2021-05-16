@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript content</title>
+    <link rel="stylesheet" href="../../../css/common-styles.css">
+    <link rel="stylesheet" href="../../../css/content-styles.css">
+</head>
+<body>
+
+    <!-- Содержимое начало -->
+    <!-- 
+        Для добавления форматированного блока кода использовать 
+        <pre data-formatted="js">code</pre>
+        сниппет - pref
+        
+        Для добавления справочного элемента использовать 
+         <span data-reference="Справочная информация">i</span>
+        сниппет - inf
+
+        Для добавления подзаголовка - subh
+        Для добавления текста - text
+        Для добавление внешней ссылки - olink
+        Для добавления изображения - coimg
+    -->     
+    
+    <h2 class="content-header">Навигация по DOM дереву</h2>   
+    <p class="content-text" data-formatted="text">
+        Все перечисленные навигационные свойства и коллекции, доступны только для чтения. <br>        
+        Почти все DOM коллекции, за небольшим исключением, живые. Они отражают текущее состояние DOM, 
+        и динамически изменяются при его изменении.
+    </p>
+    <h3 class="content-subheader">Навигация по узлам</h3>  
+    <img class="content-img" src="../../../img/sections-img/browser-section/dom-navigation.png" alt="Навигация по DOM элементам">
+    <p class="content-text" data-formatted="text">
+        Основные типы узлов: document, узлы-элементы, текстовые узлы, 
+        узлы-комментарии (и некоторые другие, всего 12). При навигации 
+        по данной схеме учитываются все узлы.<br>
+        *childNodes - коллекция дочерних узлов.        
+    </p>
+
+    <h3 class="content-subheader">Навигация по элементам</h3>
+    <img class="content-img" src="../../../img/sections-img/browser-section/dom-elements-navigation.png" alt="Навигация по элементам">
+    <p class="content-text" data-formatted="text">
+        При навигации по данной схеме учитываются только узлы-элементы.<br>
+        *children - коллекция дочерних элементов.
+    </p>
+
+    <h3 class="content-subheader">Навигация по таблицам</h3>
+    <p class="content-text" data-formatted="text">
+        ˇtable.rowsˇ – коллекция строк tr таблицы.<br>
+        ˇtable.caption/tHead/tFootˇ – ссылки на элементы таблицы caption, thead, tfoot.<br>
+        ˇtable.tBodiesˇ – коллекция элементов таблицы tbody (может быть больше одного).<br>
+        <br>
+        ˇthead/tfoot/tbody.rowsˇ - коллекция строк tr секции.<br>
+        <br>
+        ˇtr.cellsˇ – коллекция td и th ячеек, находящихся внутри строки tr. <br>
+        ˇtr.sectionRowIndexˇ – номер строки tr в текущей секции thead/tbody/tfoot. <br>
+        ˇtr.rowIndexˇ – номер строки tr в таблице (включая все строки таблицы). <br>
+        <br>
+        ˇtd.cellIndexˇ – номер ячейки в строке tr.
+    </p>
+
+    <h3 class="content-subheader">Пример навигации по элементам</h3>
+    <h3 class="content-subheader">HTML:</h3>
+    <pre data-formatted="html">
+    Комментарий!            <span data-reference="Теги body и выше условно не показаны">i</span>
+    &lt;ul&gt;
+        &lt;li&gt;
+            Текст 1
+            &lt;span&gt;Текст 2&lt;/span&gt;
+            &lt;span&gt;Текст 3&lt;/span&gt;
+        &lt;/li&gt;
+        Комментарий!
+        &lt;li&gt;&lt;/li&gt;
+        &lt;li&gt;Содержимое&lt;/li&gt;
+    &lt;/ul&gt;
+    </pre>
+
+    <h3 class="content-subheader">JS:</h3>
+    <pre data-formatted="js">
+    function stringNodes(collection) {              <span data-reference="Функция, возвращающая список элементов переданной коллекции">i</span>
+        let text = '';
+        for(let element of collection) {
+            text += element.toString() + ' ';
+        }
+        return text;
+    }
+    
+    let nodes = document.body.childNodes;           <span data-reference="Коллекция всех дочерних узлов элемента body">i</span>
+    console.log(stringNodes(nodes));                <span data-reference="[object Text] [object Comment] [object Text] [object HTMLUListElement] [object Text] - здесь присутствуют и комментарии и текстовые узлы и узлы элементы">i</span>    
+    
+    let list = nodes[2].nextSibling.childNodes;     <span data-reference="Взять узел [2] коллекции, перейти к его следующему соседнему узлу (узел Ul) и взять коллекцию его дочерних узлов">i</span>
+    console.log(stringNodes(list));                 <span data-reference="[object Text] [object HTMLLIElement] [object Text] [object Comment] [object Text] [object HTMLLIElement] [object Text] [object HTMLLIElement] [object Text] - также видим все типы узлов">i</span>    
+    
+    let elements = document.body.children;          <span data-reference="Коллекция только дочерних элементов элемента body">i</span>
+    console.log(stringNodes(elements));             <span data-reference="[object HTMLUListElement] - только узлы-элементы, он один - Ul">i</span>    
+    
+    let listElements = document.body.firstElementChild.children;    <span data-reference="Коллекция дочерних элементов первого дочернего элемета body - это Ul">i</span>
+    console.log(stringNodes(listElements));                         <span data-reference="[object HTMLLIElement] [object HTMLLIElement] [object HTMLLIElement] - только узлы-элементы">i</span>    
+    </pre>
+
+    <!-- Содержимое конец -->
+
+    <!-- Панель навигации внутри фрейма -->
+    <div class="content-navigation">
+        <p class="section-indicator">Browser</p>   
+        <button class="navigation-button" id="navigation-back">◀</button>
+        <button class="navigation-button" id="navigation-reload">🗘</button>             
+        <button class="navigation-button" id="navigation-next">▶</button>
+    </div>
+    <p id="reference-display"></p>
+    <script src="../../../js/content.js"></script> 
+</body>
+</html>

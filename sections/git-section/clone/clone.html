@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../../css/common-styles.css">
+    <link rel="stylesheet" href="../../../css/content-styles.css">
+</head>
+<body>  
+   <!-- 
+        Для добавления форматированного блока кода использовать 
+         <code><pre data-formatted="js">code</pre></code>
+        сниппет - k-preform
+        
+        Для добавления справочного элемента использовать 
+         <span data-reference="Справочная информация">i</span>
+        сниппет - k-info
+
+        Для добавления подзаголовка - k-subheader
+        Для добавления текста - k-text
+        Для добавление внешней ссылки - k-outsidelink
+        Для добавление ссылки маркера - k-buttonlink
+        Для добавления изображения - k-img
+        Для добавления маркера внутри форматированного текста - k-textmark
+    -->    
+
+    <!-- Содержимое начало -->
+    
+    <h2 class="content-header">Клонирование удаленного репозитория</h2>
+
+    <p class="content-text" data-formatted="text">
+        1. Скопировать удаленный репозиторий для работы: <br>
+            ˇgit clone ADDRESSˇ - скопирует удаленный репозиторий со всеми файлами и коммитами в текущую папку,
+            заменяет команды git init, git remote, git pull. ADDRESS - адрес удаленного репозитория (ssh или https)        
+    </p>   
+
+    <!-- Содержимое конец -->
+
+    <!-- Панель навигации внутри фрейма -->
+    <div class="content-navigation">
+        <p class="section-indicator">Javascript</p>   
+        <button class="navigation-button" id="navigation-back">◀</button>
+        <button class="navigation-button" id="navigation-reload">🗘</button>
+        <button class="navigation-button" id="navigation-next">▶</button>
+    </div>
+    <p id="reference-display"></p>
+    <script src="../../../js/content.js"></script> 
+</body>
+</html>

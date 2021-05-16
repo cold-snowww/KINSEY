@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../../css/common-styles.css">
+    <link rel="stylesheet" href="../../../css/content-styles.css">
+</head>
+<body>  
+   <!-- 
+        Для добавления форматированного блока кода использовать 
+         <code><pre data-formatted="js">code</pre></code>
+        сниппет - k-preform
+        
+        Для добавления справочного элемента использовать 
+         <span data-reference="Справочная информация">i</span>
+        сниппет - k-info
+
+        Для добавления подзаголовка - k-subheader
+        Для добавления текста - k-text
+        Для добавление внешней ссылки - k-outsidelink
+        Для добавление ссылки маркера - k-buttonlink
+        Для добавления изображения - k-img
+        Для добавления маркера внутри форматированного текста - k-textmark
+    -->    
+
+    <!-- Содержимое начало -->
+    
+    <h2 class="content-header">Удаление лишних пробелов</h2>
+
+    <code><pre data-formatted="text">
+        Удаление лишних пробелов:
+
+        ˇ&lt;%_ˇ                <span data-reference="Тег аналогичен &lt;%, но удаляет все лишние пробелы перед ним">i</span>
+        ˇ-%&gt;ˇ                <span data-reference="Тег аналогичен %&gt;, но обрезает все лишние символы новой строки, которые может вызвать скриптлет или комментарий">i</span>
+        ˇ_%&gt;ˇ                <span data-reference="Тег аналогичен &lt;%, но удаляет все лишние пробелы после него">i</span>
+    </pre></code>
+
+    <!-- Содержимое конец -->
+
+    <!-- Панель навигации внутри фрейма -->
+    <div class="content-navigation">
+        <p class="section-indicator">Javascript</p>   
+        <button class="navigation-button" id="navigation-back"></button>
+        <button class="navigation-button" id="navigation-reload"></button>
+        <button class="navigation-button" id="navigation-next"></button>
+    </div>
+    <p id="reference-display"></p>
+    <script src="../../../js/content.js"></script> 
+</body>
+</html>

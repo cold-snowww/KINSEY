@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript content</title>
+    <link rel="stylesheet" href="../../../css/common-styles.css">
+    <link rel="stylesheet" href="../../../css/content-styles.css">
+</head>
+<body>
+
+    <!-- Содержимое начало -->
+    <!-- 
+        Для добавления форматированного блока кода использовать 
+        <code><pre data-formatted="js">code</pre></code>
+        сниппет - pref
+        
+        Для добавления справочного элемента использовать 
+         <span data-reference="Справочная информация">i</span>
+        сниппет - inf
+
+        Для добавления подзаголовка - subh
+        Для добавления текста - text
+        Для добавление внешней ссылки - olink
+    -->     
+    
+    <h2 class="content-header">Локализация</h2>
+    <h3 class="content-subheader">Расшифровка локалей:</h3>
+    <br class="content-text">
+        'zh-Hans-CN':	zh – китайский язык, Hans – упрощенная письменность, CN - КНР</br>
+        'ru-RU':	    ru – русский язык, RU – используемый в РФ</br>
+        'th-TH-u-nu-thai':	u – расширение локали nu-thai – запись тайскими буквами</br>
+    </p>
+    <h3 class="content-subheader">Сравнение строк:</h3>
+    <code><pre data-formatted="js">
+    let arr = ['яша', 'Ёж', 'Яша', 'меч', 'Еж'];    <span data-reference="Массив для сортировки">i</span>
+
+    let collator = new Intl.Collator(               <span data-reference="Создание коллатора ">i</span>
+        'ru-RU', {                                  <span data-reference="Используемая локаль (массив локалей) и объект с опциями (опционально)">i</span>
+            localeMatcher: 'best fit',              <span data-reference="Способ подбора локали: lookup / best fit">i</span>
+            usage: 'sort',                          <span data-reference="Цель сравнения: sort / search">i</span>
+            sensitivity: 'accent',                  <span data-reference="Чувствительность: base / accent / case / variant">i</span>
+            ignorePunctuation: true,                <span data-reference="Игнорировать пунктуацию">i</span>
+            numeric: true,                          <span data-reference="Сравнивать цифры как цифры">i</span>
+            caseFirst: 'upper'                      <span data-reference="Приоретет заглавным буквам">i</span>
+        }
+    );
+    
+    arr.sort();                                     <span data-reference="Сортировка по умолчанию, по символам unicode">i</span>
+    console.log(arr);                               <span data-reference="[ 'Ёж', 'Еж', 'Яша', 'меч', 'яша' ]">i</span>
+    
+    arr.sort((a, b) => collator.compare(a, b));     <span data-reference="Сортировка с использованием коллатора. collator.compare(a, b) возвращает -1 если a находится до b, 0 если там же, 1 если после">i</span>
+    console.log(arr);                               <span data-reference="[ 'Еж', 'Ёж', 'меч', 'Яша', 'яша' ]">i</span> 
+    </pre></code>    
+
+    <h3 class="content-subheader">Форматирование дат:</h3>
+    <code><pre data-formatted="js">
+    let date = new Date(1988, 3, 4);            <span data-reference="Создание даты">i</span>
+
+    let formatter = new Intl.DateTimeFormat(    <span data-reference="Создание форматтера">i</span>
+        'ru-RU', {                              <span data-reference="Используемая локаль (массив локалей) и объект с опциями (опционально)">i</span>
+            localeMatcher: 'best fit',          <span data-reference="Способ подбора локали: lookup / best fit">i</span>
+            formatMatcher: 'basic',             <span data-reference="Алгоритм реализации basic / best fit">i</span>
+            hour12: false,                      <span data-reference="Использование 12 часового формата">i</span>
+            timeZone: 'Asia/Novosibirsk',       <span data-reference="Часовой пояс UTC или IANA">i</span>
+            weekday: 'long',                    <span data-reference="День недели narrow / short / long">i</span>
+            era: 'long',                        <span data-reference="Эра  narrow / short / long">i</span>
+            year: 'numeric',                    <span data-reference="Год 2-digit / numeric">i</span>
+            month: 'long',                      <span data-reference="2-digit / numeric / narrow / short / long">i</span>
+            day: 'numeric',                     <span data-reference="2-digit / numeric">i</span>
+            hour: '2-digit',                    <span data-reference="2-digit / numeric">i</span>
+            minute: '2-digit',                  <span data-reference="2-digit / numeric">i</span>
+            second: '2-digit',                  <span data-reference="2-digit / numeric">i</span>
+            timeZoneName: 'long'                <span data-reference="short / long">i</span>
+        }
+    );
+    
+    let dateString = formatter.format(date);    <span data-reference="Получение форматированной даты в строковом формате">i</span>
+    console.log(dateString);                    <span data-reference="понедельник, 4 апреля 1988 г. от Рождества Христова, 00:00:00 Новосибирск, летнее время">i</span>
+    </pre></code>
+
+    <h3 class="content-subheader">Форматирование чисел:</h3>
+    <code><pre data-formatted="js">
+    let number = 250000.5;                      <span data-reference="Число">i</span>
+
+    let formatter = Intl.NumberFormat(          <span data-reference="Создание форматтера">i</span>
+        'ru-RU', {                              <span data-reference="Используемая локаль (массив локалей) и объект с опциями (опционально)">i</span>
+            localeMatcher: 'best fit',          <span data-reference="Способ подбора локали: lookup / best fit">i</span>
+            style: 'currency',                  <span data-reference="Стиль decimal, percent, currency">i</span>
+            currency: 'RUB',                    <span data-reference="Код валюты">i</span>
+            currencyDisplay: 'symbol',          <span data-reference="Стиль кода валюты code, symbol, name">i</span>
+            useGrouping: true,                  <span data-reference="Разделять цифры на группы">i</span>
+            minimumIntegerDigits: 6,            <span data-reference="Минимальное число целых разрядов">i</span>
+            minimumFractionDigits: 2,           <span data-reference="Минимальное число дробных разрядов">i</span>
+            maximumFractionDigits: 2,           <span data-reference="Максимальное число дробных разрядов">i</span>
+            minimumSignificantDigits: 1,        <span data-reference="Минимум значимых чисел">i</span>
+            maximumSignificantDigits: 10        <span data-reference="Максимум значимых чисел">i</span>
+        }
+    );
+    
+    let formatted = formatter.format(number);   <span data-reference="Получение числа в строковом форматированном виде">i</span>
+    console.log(formatted);                     <span data-reference="250 000,50 ₽">i</span>
+    </pre></code>
+
+    <h3 class="content-subheader">Аналогичные встроенные методы Date, String, Number:</h3>
+    <code><pre data-formatted="js">
+    let str = 'Док';                            
+    console.log(                                <span data-reference="-1">i</span>
+        str.localeCompare('Дом', 'ru-RU', {     <span data-reference="Метод аналогичен Intl.Collator().compare. Используется для сравнения строк по алфавиту локали, вернет -1 если str по алфавиту находится перед 'Дом', 0 если там же, 1 если после">i</span>
+            sensitivity: 'accent'
+        })
+    );
+    
+    let date = new Date(1988, 3, 4);            
+    console.log(                                <span data-reference="апрель 04.04.1988 00:00:00">i</span>
+        date.toLocaleString('ru-RU', {          <span data-reference="Метод аналогичен Intl.NumberFormat().format">i</span>
+            month: 'long'
+        }),
+        date.toLocaleDateString('ru'),          <span data-reference="Возвращает строковое представление даты (без времени). Методу можно передать массив локалей и объект с опциями (опционально)">i</span>
+        date.toLocaleTimeString('ru')           <span data-reference="Возвращает строковое представление времени (без даты).Методу можно передать массив локалей и объект с опциями (опционально)">i</span>
+    );
+    
+    let numb = 586;
+    console.log(                                <span data-reference="586,000">i</span>
+        numb.toLocaleString('ru-RU', {          <span data-reference="Метод аналогичен Intl.NumberFormat().format">i</span>
+            minimumFractionDigits: 3
+        })
+    );
+    </pre></code>
+
+    <h3 class="content-subheader">Ссылки:</h3>
+    <a href="http://tools.ietf.org/html/rfc5646" class="outside-link" target="_blank">
+        Стандарт описывающий локали
+    </a>
+    <a href="http://www.iana.org/assignments/language-subtag-registry/language-subtag-registry" class="outside-link" target="_blank">
+        Реестр языков IANA
+    </a>
+    <a href="https://time365.info/chasovie-poyasa.php" class="outside-link" target="_blank">
+        Часовые пояса IANA
+    </a>
+    <a href="http://www.currency-iso.org/en/home/tables/table-a1.html" class="outside-link" target="_blank">
+        Коды валюты
+    </a>
+    <!-- Содержимое конец -->
+
+    <!-- Панель навигации внутри фрейма -->
+    <div class="content-navigation">
+        <p class="section-indicator">Javascript</p>   
+        <button class="navigation-button" id="navigation-back">◀</button>
+        <button class="navigation-button" id="navigation-reload">🗘</button>
+        <button class="navigation-button" id="navigation-next">▶</button>
+    </div>
+    <p id="reference-display"></p>
+    <script src="../../../js/content.js"></script> 
+</body>
+</html>

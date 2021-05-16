@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript content</title>
+    <link rel="stylesheet" href="../../../css/common-styles.css">
+    <link rel="stylesheet" href="../../../css/content-styles.css">
+</head>
+<body>
+
+    <!-- Содержимое начало -->
+    <!-- 
+        Для добавления форматированного блока кода использовать 
+        <code><pre data-formatted="js">code</pre></code>
+        сниппет - pref
+        
+        Для добавления справочного элемента использовать 
+         <span data-reference="Справочная информация">i</span>
+        сниппет - inf
+
+        Для добавления подзаголовка - subh
+        Для добавления текста - text
+        Для добавление внешней ссылки - olink
+    -->     
+    
+    <h2 class="content-header">Async-await</h2>
+    <h3 class="content-subheader">Простейшая асинхронная функция:</h3>
+    <code><pre data-formatted="js">
+    async function simple() {                           <span data-reference="Объявление асинхронной функции">i</span>
+        return 'Hi man!';                               <span data-reference="Возврат любого значения будет обернут в промис, который затем вернет функция">i</span>
+    }
+    
+    simple()                                            <span data-reference="Так как функция возвращает промис, можно использовать стандартные потребители then, catch, finally">i</span>
+        .then(result => console.log(result))            <span data-reference="Обработка разрешенного промиса с помощью then">i</span>
+        .catch(error => console.log(error.message));    <span data-reference="Обработка отклоненного промиса с помощью catch">i</span>
+    </pre></code>    
+
+    <h3 class="content-subheader">Использование await:</h3>
+    <code><pre data-formatted="js">
+    async function simpleAwait() {                      <span data-reference="Объявление асинхронной функции">i</span>
+        let promise = new Promise(                      <span data-reference="Создание промиса который завершится ошибкой через 3с">i</span>
+            (resolve, reject) => {
+                setTimeout(() => 
+                reject(new Error('err')), 3000)
+            }
+        );
+    
+        try {                                           <span data-reference="Помещаем код в блок try-catch так как промис может завершиться ошибкой (будет отклонен)">i</span>
+            let result = await promise;                 <span data-reference="Оператор await помещенный перед промисом, приостановет выполнение кода до завершения промиса, затем присвоит его значение переменной result">i</span>
+            return result;                              <span data-reference="Возвращенный результат будет оборнут в промис">i</span>
+        } catch(error) {                                <span data-reference="Если промис будет отклонен или будет выброшена ошибка, это будет обработано в catch">i</span>
+            console.log(error.message);
+        }
+    }
+    
+    simpleAwait();                                      <span data-reference="Вывод в консоль - ErrRor через 3с">i</span>
+    </pre></code>
+
+    <h3 class="content-subheader">Реальный пример асинхронной функции:</h3>
+    <code><pre data-formatted="js">
+    async function showAvatar(name) {                       <span data-reference="Функция по вставке аватара пользователя github по его имени">i</span>
+        let url = `https://api.github.com/users/${name}`;   <span data-reference="URL адрес для доступа к объекту пользователя через API github">i</span>
+        let response = await fetch(url);                    <span data-reference="Функция fetch() возвращает промис с объектом ответа сервера на запрос. Использование await перед промисом заставляет код ждать ответ сервера">i</span>
+        let user = await response.json();                   <span data-reference="Функция json() возвращает промис с объектом пользователя. Использование await перед промисом заставляет код ждать ответ сервера">i</span>
+        let img = document.createElement('img');            <span data-reference="Из полученного объекта пользователя извлекается ссылка на аватар и создается элемент img на странице">i</span>
+        img.src = user.avatar_url;
+        document.body.append(img);
+    }
+        
+    showAvatar('remy');
+    </pre></code>
+    <!-- Содержимое конец -->
+
+    <!-- Панель навигации внутри фрейма -->
+    <div class="content-navigation">
+        <p class="section-indicator">Javascript</p>   
+        <button class="navigation-button" id="navigation-back">◀</button>
+        <button class="navigation-button" id="navigation-reload">🗘</button>
+        <button class="navigation-button" id="navigation-next">▶</button>
+    </div>
+    <p id="reference-display"></p>
+    <script src="../../../js/content.js"></script> 
+</body>
+</html>

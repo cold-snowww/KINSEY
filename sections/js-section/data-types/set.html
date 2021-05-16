@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript content</title>
+    <link rel="stylesheet" href="../../../css/common-styles.css">
+    <link rel="stylesheet" href="../../../css/content-styles.css">
+</head>
+<body>
+
+    <!-- Содержимое начало -->
+    <!-- 
+        Для добавления форматированного блока кода использовать 
+        <code><pre data-formatted="js">code</pre></code>
+        сниппет - pref
+        
+        Для добавления справочного элемента использовать 
+         <span data-reference="Справочная информация">i</span>
+        сниппет - inf
+
+        Для добавления подзаголовка - subh
+        Для добавления текста - text
+        Для добавление внешней ссылки - olink
+    -->     
+    
+    <h2 class="content-header">Структура данных Set</h2>
+    <code><pre data-formatted="js">
+    let set = new Set(iterable);            <span data-reference="Создание объекта Set из итерируемого объекта">i</span>
+    let guestList = new Set();              <span data-reference="Создание пустого объекта Set ">i</span>
+    
+    guestList                               <span data-reference="Добавление значений">i</span>
+        .add('John')
+        .add('Lora')
+        .add('Mary')
+        .add('Mary');                       <span data-reference="Добавляются только уникальные значения, при повторном добавлении ничего не происходит">i</span>
+    
+    let result = guestList.size;            <span data-reference="Размер коллекции set">i</span>
+    
+    result = guestList.delete('Mary');      <span data-reference="Удаление значения, с возвратом true если значение найдено и удалено или false">i</span>
+    result = guestList.has('John');         <span data-reference="Проверка наличия значения - true">i</span>
+    result = guestList.values();            <span data-reference="Возвращает итерируемый объект значений">i</span>
+    
+    for(let i of guestList) {               <span data-reference="Перебор значений в цикле for-of">i</span>
+        console.log(i);
+    }
+    
+    guestList.forEach(                      <span data-reference="Применение функции-колбэка к каждому значению">i</span>
+        (value, valueAgain, set) => {
+            console.log(`Send invite to: ${value}`);
+        }
+    );
+    
+    guestList.clear();                      <span data-reference="Удаление всех значений">i</span>
+    </pre></code>    
+
+    <h3 class="content-subheader">Структура данных WeakSet</h3>
+    <code><pre data-formatted="js">
+    let admin = {name: 'John'};             
+    let clerk = {name: 'Paola'};
+    
+    let visitors = new Set();               <span data-reference="Создание объекта weakSet">i</span>
+    
+    visitors                                
+        .add(admin)                         <span data-reference="Добавление объекта в коллекцию. Можно добавить только объект.">i</span>
+        .add(admin)                         <span data-reference="При повторном добавлении одного и того же объекта ничего не происходит">i</span>
+        .add(clerk);
+    
+    let result = visitors.has(admin);       <span data-reference="Проверка наличия объекта - true ">i</span>
+        result = visitors.delete(clerk);    <span data-reference="Удаление объекта из коллекции, возврат true если объект найден и удален">i</span>
+    </pre></code>
+
+    <!-- Содержимое конец -->
+
+    <!-- Панель навигации внутри фрейма -->
+    <div class="content-navigation">
+        <p class="section-indicator">Javascript</p>   
+        <button class="navigation-button" id="navigation-back">◀</button>
+        <button class="navigation-button" id="navigation-reload">🗘</button>
+        <button class="navigation-button" id="navigation-next">▶</button>
+    </div>
+    <p id="reference-display"></p>
+    <script src="../../../js/content.js"></script> 
+</body>
+</html>

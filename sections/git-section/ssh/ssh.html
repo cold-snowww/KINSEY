@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../../css/common-styles.css">
+    <link rel="stylesheet" href="../../../css/content-styles.css">
+</head>
+<body>  
+   <!-- 
+        Для добавления форматированного блока кода использовать 
+         <code><pre data-formatted="js">code</pre></code>
+        сниппет - k-preform
+        
+        Для добавления справочного элемента использовать 
+         <span data-reference="Справочная информация">i</span>
+        сниппет - k-info
+
+        Для добавления подзаголовка - k-subheader
+        Для добавления текста - k-text
+        Для добавление внешней ссылки - k-outsidelink
+        Для добавление ссылки маркера - k-buttonlink
+        Для добавления изображения - k-img
+        Для добавления маркера внутри форматированного текста - k-textmark
+    -->    
+
+    <!-- Содержимое начало -->
+    
+    <h2 class="content-header">Настройка SSH</h2>
+
+    <p class="content-text" data-formatted="text">
+        1. Проверка наличия SSH ключей: <br>
+            ˇls -al ~/.sshˇ - вывести список всех ключей, необходимы один из следующих id_rsa.pub id_ecdsa.pub id_ed25519.pub <br><br>
+
+        2. Если ключа нет, его нужно создать: <br>        
+            ˇssh-keygen -t ed25519 -C email@example.comˇ - создание ключа с меткой в виде email <br>  
+            ˇssh-keygen -t rsa -b 4096 -C email@example.comˇ - создание ключа с меткой в виде email, на старых операционных системах <br>
+            ˇeval `ssh-agent -s`ˇ - запустить ssh агент <br> 
+            ˇssh-add ~/.ssh/id_ed25519ˇ - добавить ключ в ssh агент <br>
+            ˇclip &lt; ~/.ssh/id_ed25519.pubˇ - скопировать код публичного ключа в буфер обмена <br><br>           
+            
+        3. Добавление ключа на сервер GITHUB: <br>
+            Зайти в ˇSettings &gt; SSH and GPG keys &gt; New SSH keyˇ и добавить новый ключ SSH, 
+            вставив код публичного ключа из буфера обмена    
+    </p>   
+
+    <!-- Содержимое конец -->
+
+    <!-- Панель навигации внутри фрейма -->
+    <div class="content-navigation">
+        <p class="section-indicator">Javascript</p>   
+        <button class="navigation-button" id="navigation-back">◀</button>
+        <button class="navigation-button" id="navigation-reload">🗘</button>
+        <button class="navigation-button" id="navigation-next">▶</button>
+    </div>
+    <p id="reference-display"></p>
+    <script src="../../../js/content.js"></script> 
+</body>
+</html>

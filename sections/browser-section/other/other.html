@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript content</title>
+    <link rel="stylesheet" href="../../../css/common-styles.css">
+    <link rel="stylesheet" href="../../../css/content-styles.css">
+</head>
+<body>
+
+    <!-- Содержимое начало -->
+    <!-- 
+        Для добавления форматированного блока кода использовать 
+        <pre data-formatted="js">code</pre>
+        сниппет - pref
+        
+        Для добавления справочного элемента использовать 
+         <span data-reference="Справочная информация">i</span>
+        сниппет - inf
+
+        Для добавления подзаголовка - subh
+        Для добавления текста - text
+        Для добавление внешней ссылки - olink
+        Для добавление ссылки маркера - mlink
+        Для добавления изображения - coimg
+    -->     
+    
+    <h2 class="content-header">Разное</h2>
+    
+    <h3 class="content-subheader">MutationObserver: наблюдатель за изменениями
+        <a href="https://learn.javascript.ru/mutation-observer#itogo" class="marked-link" target="_blank">➥</a>
+    </h3>
+    <pre data-formatted="js">
+    let observer = new MutationObserver(callback);
+    callback(mutationRecordsArray, observer) {
+    ...
+    }
+
+    observer.observe(element, {
+        childList: true,                    <span data-reference="Изменения в непосредственных детях node">i</span>
+        subtree: true,                      <span data-reference="Во всех потомках node">i</span>
+        attributes: false,                  <span data-reference="В атрибутах node">i</span>
+        attributeFilter: ['src', 'id'],     <span data-reference="Массив имён атрибутов, чтобы наблюдать только за выбранными">i</span>
+        characterData: true,                <span data-reference="Наблюдать ли за node.data (текстовое содержимое)">i</span>
+        characterDataOldValue: true,        <span data-reference="Если true, будет передавать и старое и новое значение node.data в колбэк (см далее), иначе только новое (также требуется опция characterData),">i</span>
+        attributeOldValue: false            <span data-reference="Если true, будет передавать и старое и новое старое значение атрибута в колбэк (см далее), иначе только новое (также требуется опция attributes)">i</span>
+    });
+
+    mutationRecord = {
+        type: 'attributes'/'characterData'/'childList',     <span data-reference="Тип изменения, один из: 'attributes' изменён атрибут, 'characterData' изменены данные elem.data, это для текстовых узлов, 'childList' добавлены/удалены дочерние элементы,">i</span>
+        target: node,                                       <span data-reference="Где произошло изменение: элемент для 'attributes', текстовый узел для 'characterData' или элемент для 'childList'">i</span>
+        addedNodes/removedNodes: nodesArray,                <span data-reference="Добавленные/удалённые узлы">i</span>
+        previousSibling/nextSibling: node,                  <span data-reference="Предыдущий или следующий одноуровневый элемент для добавленных/удалённых элементов">i</span>
+        attributeName/attributeNamespace: 'src',            <span data-reference="Имя/пространство имён (для XML) изменённого атрибута">i</span>
+        oldValue: 'text'                                    <span data-reference="предыдущее значение, только для изменений атрибута или текста, если включена соответствующая опция attributeOldValue/characterDataOldValue">i</span>
+    };
+
+    observer.disconnect();                          <span data-reference="Останавливает наблюдение.">i</span>
+    mutationRecords = observer.takeRecords();       <span data-reference="Получает список необработанных записей изменений, которые произошли, но колбэк для них ещё не выполнился.">i</span></pre>
+
+    <h3 class="content-subheader">Selection и Range
+        <a href="https://learn.javascript.ru/selection-range#itogo" class="marked-link" target="_blank">➥</a>
+    </h3>
+    </br>
+    Range:
+    <pre data-formatted="js">
+    let range = new Range();
+    range.setStart(startNode, 0);
+    range.setEnd(endNode, 2); 
+    
+    range.startContainer;               <span data-reference="Начальный узел">i</span>
+    range.startOffset;                  <span data-reference="Начальное смещение">i</span>
+    range.endContainer;                 <span data-reference="Конечный узел">i</span>
+    range.endOffset;                    <span data-reference="Конечное смещение">i</span>
+    range.collapsed;                    <span data-reference="boolean, true - если диапазон начинается и заканчивается на одном и том же месте (следовательно, в диапазон ничего не входит)">i</span>
+    range.commonAncestorContainer;      <span data-reference="Ближайший общий предок всех узлов в пределах диапазона">i</span>
+
+    range.setStart(node, offset);       <span data-reference="Установить начальную границу в позицию offset в node. node может быть как текстовым узлом, так и элементом: для текстовых узлов offset пропускает указанное количество символов, в то время как для элементов – указанное количество дочерних узлов.">i</span> 
+    range.setStartBefore(node);         <span data-reference="Установить начальную границу прямо перед node">i</span> 
+    range.setStartAfter(node);          <span data-reference="Установить начальную границу прямо после node">i</span> 
+
+    range.setEnd(node, offset);         <span data-reference="Установить конечную границу в позицию offset в node">i</span> 
+    range.setEndBefore(node);           <span data-reference="Установить конечную границу прямо перед node">i</span> 
+    range.setEndAfter(node);            <span data-reference="Установить конечную границу прямо после node">i</span> 
+
+    range.selectNode(node);             <span data-reference="Выделить node целиком">i</span>
+    range.selectNodeContents(node);     <span data-reference="Выделить всё содержимое node">i</span>
+    range.collapse(toStart);            <span data-reference="Если указано toStart=true, установить конечную границу в начало, иначе установить начальную границу в конец, схлопывая таким образом диапазон">i</span>
+    range.cloneRange();                 <span data-reference="Создать новый диапазон с идентичными границами">i</span>
+
+    range.deleteContents();             <span data-reference="Удалить содержимое диапазона из документа">i</span>
+    range.extractContents();            <span data-reference="Удалить содержимое диапазона из документа и вернуть как DocumentFragment">i</span>
+    range.cloneContents();              <span data-reference="Склонировать содержимое диапазона и вернуть как DocumentFragment">i</span>
+    range.insertNode(node);             <span data-reference="Вставить node в документ в начале диапазона">i</span>
+    range.surroundContents(node);       <span data-reference="Обернуть node вокруг содержимого диапазона. Чтобы этот метод сработал, диапазон должен содержать как открывающие, так и закрывающие теги для всех элементов внутри себя: не допускаются частичные диапазоны.">i</span></pre>
+    
+    <a href="https://developer.mozilla.org/ru/docs/Web/API/Range" class="outside-link" target="_blank">
+        Справка по прочим методам и свойствам на MDN
+    </a>
+    </br>
+    Selection:
+    <pre data-formatted="js">
+    let selection = document.getSelection();
+
+    selection.anchorNode;                   <span data-reference="узел, с которого начинается выделение">i</span>
+    selection.anchorOffset;                 <span data-reference="смещение в anchorNode, где начинается выделение">i</span>
+    selection.focusNode;                    <span data-reference="узел, на котором выделение заканчивается">i</span>
+    selection.focusOffset;                  <span data-reference="смещение в focusNode, где выделение заканчивается">i</span>
+    selection.isCollapsed;                  <span data-reference="true, если диапазон выделения пуст или не существует">i</span>
+    selection.rangeCount;                   <span data-reference="количество диапазонов в выделении, максимум 1 во всех браузерах, кроме Firefox">i</span>
+        
+    selection.getRangeAt(i);                <span data-reference="взять i-ый диапазон, начиная с 0. Во всех браузерах, кроме Firefox, используется только 0">i</span>
+    selection.addRange(range);              <span data-reference="добавить range в выделение. Все браузеры, кроме Firefox, проигнорируют этот вызов, если в выделении уже есть диапазон">i</span>
+    selection.removeRange(range);           <span data-reference="удалить range из выделения">i</span>
+    selection.removeAllRanges();            <span data-reference="удалить все диапазоны">i</span>
+    selection.empty();                      <span data-reference="сокращение для removeAllRanges">i</span>
+
+    selection.collapse(node, offset);                       <span data-reference="заменить выделенный диапазон новым, который начинается и заканчивается на node, на позиции offset">i</span>
+    selection.setPosition(node, offset);                    <span data-reference="то же самое, что collapse (дублирующий метод-псевдоним)">i</span>
+    selection.collapseToStart();                            <span data-reference="схлопнуть (заменить на пустой диапазон) к началу выделения">i</span>
+    selection.collapseToEnd();                              <span data-reference="схлопнуть диапазон к концу выделения">i</span>
+    selection.extend(node, offset);                         <span data-reference="переместить фокус выделения к данному node, с позиции offset">i</span>
+    selection.setBaseAndExtent(                             <span data-reference="заменить диапазон выделения на заданные начало anchorNode/anchorOffset и конец focusNode/focusOffset. Будет выделено всё содержимое между этими границами">i</span>
+       anchorNode, anchorOffset, focusNode, focusOffset
+    );
+    selection.selectAllChildren(node);                      <span data-reference="выделить все дочерние узлы данного узла node">i</span>
+    selection.deleteFromDocument();                         <span data-reference="удалить содержимое выделения из документа">i</span>
+    selection.containsNode(node, false/true);               <span data-reference="проверяет, содержит ли выделение node (частично, если второй аргумент равен true)">i</span>
+    
+    elem.onselectstart + preventDefault()
+    document.onselectionchange</pre>
+
+    Input / TextArea:
+    <pre data-formatted="js">
+    input.selectionStart;                               <span data-reference="позиция начала выделения (это свойство можно изменять)">i</span>
+    input.selectionEnd;                                 <span data-reference="позиция конца выделения (это свойство можно изменять)">i</span>
+    input.selectionDirection;                           <span data-reference="направление выделения, одно из: «forward» (вперёд), «backward» (назад) или «none» (без направления, если, к примеру, выделено с помощью двойного клика мыши)">i</span>
+
+    input.select();                                     <span data-reference="выделяет всё содержимое input (может быть textarea вместо input)">i</span>
+    input.setSelectionRange(start, end, [direction]);   <span data-reference="изменить выделение, чтобы начиналось с позиции start, и заканчивалось end, в данном направлении direction (необязательный параметр)">i</span>
+    input.setRangeText(                                 <span data-reference="заменяет выделенный текст в диапазоне новым. Если аргументы start и end указаны, то они задают начало и конец диапазона, иначе используется текущее выделение">i</span>
+        replacement, [start], [end], [selectionMode]    <span data-reference="аргумент selectionMode, определяет как будет вести себя выделение после замены текста. Возможные значения: 'select', 'start', 'end', 'preserve'">i</span>
+    );
+
+    input.onselect</pre>
+
+    <h3 class="content-subheader">Событийный цикл: микрозадачи и макрозадачи
+        <a href="https://learn.javascript.ru/event-loop#itogo" class="marked-link" target="_blank">➥</a>
+    </h3>
+    <pre data-formatted="js">
+    queueMicrotask(func);       <span data-reference="Помещает задачу в очередь микрозадач">i</span>
+    setTimeout(func);           <span data-reference="Помещает задачу в очередь макрозадач">i</span></pre>
+    <p class="content-text" data-formatted="text">
+        Сразу после каждой макрозадачи движок исполняет все задачи 
+        из очереди микрозадач перед тем, как выполнить следующую 
+        макрозадачу или отобразить изменения на странице, или сделать 
+        что-то ещё. Все микрозадачи завершаются до обработки каких-либо 
+        событий или рендеринга, или перехода к другой макрозадаче.
+    </p>
+    <!-- Содержимое конец -->
+
+    <!-- Панель навигации внутри фрейма -->
+    <div class="content-navigation">
+        <p class="section-indicator">Browser</p>   
+        <button class="navigation-button" id="navigation-back">◀</button>
+        <button class="navigation-button" id="navigation-reload">🗘</button>
+        <button class="navigation-button" id="navigation-next">▶</button>
+    </div>
+    <p id="reference-display"></p>
+    <script src="../../../js/content.js"></script> 
+</body>
+</html>

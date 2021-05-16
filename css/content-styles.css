@@ -1,0 +1,224 @@
+/* Общие стили контент-фреймов*/
+:root {
+    font-size: 16px;      
+}
+
+body {
+    margin: 0;    
+    padding: 3.75rem 30px 7rem 15px;    
+    color: #ffffff;
+    font-family: var(--exo);
+}
+
+@media screen and (max-width: 800px) {
+    body {
+        scrollbar-width: none;
+    }
+    body::-webkit-scrollbar {
+        width: 0;
+    }
+}
+
+/* Стили стартового фрейма */
+.frame-startup-img {
+    display: block;    
+    margin: 0 auto;
+}
+
+/* Стили стандартных фреймов */
+.content-header {
+    font-size: 1.25rem;    
+    text-transform: uppercase;    
+}
+.content-subheader {
+    margin-top: 1.5em;
+    font-size: 1.125rem;    
+}
+.content-text,
+[data-formatted="text"] {
+    max-width: 90%;
+    margin-top: 0.75em;
+    font-size: 1.1rem; 
+    line-height: 1.25em; 
+    color: #fddf7b;
+    font-family: 'Ubuntu Mono', monospace;      
+}
+.content-list > li{
+    margin-top: 1em;
+    font-size: 1rem;
+    line-height: 1.25;
+    list-style: decimal;
+}
+.outside-link {    
+    display: block;
+    margin-top: 1em;
+    color: #ff84a9;
+    font-size: 1rem;
+    font-style: italic;
+}
+.content-links {
+    display: flex;  
+    flex-direction: column;  
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+.content-link {
+    display: inline-block;
+    min-width: 45%;     
+    padding: 0.4em;    
+}
+.marked-link {
+    display: inline-block;
+    padding: 0.2em;    
+    margin-left: 0.5em;
+    color: #ff326f;
+    border: 1px solid  #000000;
+    border-radius: 50%;
+    box-shadow: 0 0 0.8em #ff326f;
+}
+.content-img {
+    display: block;
+    margin: 1em auto 0 auto;
+    max-width: 100%;    
+}
+
+/* Стили панели навигации */
+.content-navigation {
+    display: flex;
+    justify-content: space-between;
+    position: fixed;    
+    top: 0;
+    left: 0;
+    width: 100%; 
+    padding: 15px 30px 15px 15px;      
+    color: var(--main-color);   
+    background-color: var(--main-bg-color);
+}
+
+.navigation-button {
+    display: block;
+    height: 1.875rem;
+    width: 1.875rem;
+    font-size: 0;    
+    border: var(--border); 
+    background-image: url(../img/icn/sprite.png);
+    background-size: cover;   
+}
+.navigation-button:first-of-type {
+    margin-left: auto;
+}
+.navigation-button:nth-of-type(2) {
+    background-position-x: -1.75rem;
+}
+.navigation-button:nth-of-type(3) {
+    background-position-x: -3.5rem;
+}
+
+.section-indicator {
+    margin-right: 1em;    
+    padding: 0.3125em;    
+    border: var(--border);
+}
+
+/* Стили дисплея и справочных элементов*/
+#reference-display {
+    position: fixed;    
+    height: 7rem;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px;
+    overflow-y: auto;
+    font-family: var(--exo);    
+    border-top: var(--border);    
+    background-color: var(--main-bg-color); 
+    scrollbar-width: none;   
+}
+#reference-display::-webkit-scrollbar {
+    width: 3px;
+}
+[data-reference] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.325em;
+    height: 1.325em;   
+    font-size: 0.8rem;
+    color: var(--main-color);    
+    border: var(--border);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* Эффекты при наведении курсора на кнопки */
+@media (hover: hover) {
+    .content-link:hover {        
+        outline: solid 1px var(--main-color);             
+    }
+    .navigation-button:active {
+        transform: scale(1.08);
+    }
+    .outside-link:hover {
+        text-decoration: underline;
+    }
+}
+
+/* Стили контейнеров для кода */
+pre[data-formatted] {
+    margin-top: 1.5em;
+    padding-bottom: 0.25em;
+    font-size: 1.125rem;
+    font-family: var(--mono);
+    line-height: 1.25;    
+    overflow-x: auto;    
+    scrollbar-width: none;
+}
+pre[data-formatted]::-webkit-scrollbar {    
+    height: 3px;
+}
+
+/* Стили для цветового форматирования кода */
+.code-brown {
+    color: #fddf7b;
+}
+.code-yellow {
+    color: #fffb00;
+}
+.code-red {
+    color: #ff326f;
+}
+.code-cyan {
+    color: #00FFFF;
+    font-style: italic;
+}
+.code-blue {
+    color: #7c85ff;    
+}
+.code-purple {
+    color: #b892ff;    
+}
+.code-orange {
+    color: #ff8d1c;
+}
+.code-grey {
+    color: #bebebe;    
+}
+.code-lime {
+    color: #00ff00;
+}
+.code-green {
+    color: #55ff71;
+}
+.code-fuchsia {
+    color: #ff62ff;
+}
+.code-pink {
+    color: #ff84a9;
+}
+
+/* Стиль фрейма с ключевыми словами */
+.keywords-container {
+    column-count: 3;
+}
+
+

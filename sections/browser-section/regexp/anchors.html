@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript content</title>
+    <link rel="stylesheet" href="../../../css/common-styles.css">
+    <link rel="stylesheet" href="../../../css/content-styles.css">
+</head>
+<body>
+
+    <!-- Содержимое начало -->
+    <!-- 
+        Для добавления форматированного блока кода использовать 
+        <code><pre data-formatted="js">code</pre></code>
+        сниппет - pref
+        
+        Для добавления справочного элемента использовать 
+         <span data-reference="Справочная информация">i</span>
+        сниппет - inf
+
+        Для добавления подзаголовка - subh
+        Для добавления текста - text
+        Для добавление внешней ссылки - olink
+    -->     
+    
+    <h2 class="content-subheader">Якоря: начало строки ^ и конец $
+        <a href="https://learn.javascript.ru/regexp-anchors" class="marked-link" target="_blank">➥</a>
+    </h2>
+    <pre data-formatted="js">
+    let str = '25\n36\n48';     <span data-reference="Многострочный текст, \n - перевод строки">i</span>
+
+    let regOne = /^\d/g;        <span data-reference="Найдет только цифру 2. ^ - начало всей строки текста">i</span>
+    let regTwo = /^\d/gm;       <span data-reference="Найдет цифры 2, 3, 4. С флагом m, ^ - начало каждой строки">i</span>
+    let regThree = /\d$/g;      <span data-reference="Найдет только цифру 8. $ - конец всей строки текста">i</span>
+    let regFour = /\d$/gm;      <span data-reference="Найдет цифры 5, 6, 8. С флагом m, $ - конец каждой строки текста">i</span></pre>    
+
+    <!-- Содержимое конец -->
+
+    <!-- Панель навигации внутри фрейма -->
+    <div class="content-navigation">
+        <p class="section-indicator">Javascript</p>   
+        <button class="navigation-button" id="navigation-back">◀</button>
+        <button class="navigation-button" id="navigation-reload">🗘</button>
+        <button class="navigation-button" id="navigation-next">▶</button>
+    </div>
+    <p id="reference-display"></p>
+    <script src="../../../js/content.js"></script> 
+</body>
+</html>

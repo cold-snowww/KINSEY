@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KINSEY Help System</title>     
+    <link rel="icon" type="image/png" sizes="16x16" href="./img/icn/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./img/icn/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="./img/icn/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="120x120" href="./img/icn/favicon-120x120.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="./img/icn/android-icon-192x192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="./img/icn/apple-touch-icon-180x180.png">  
+    <link rel="stylesheet" href="./css/common-styles.css"> 
+    <link rel="stylesheet" href="./css/interface-styles.css"> 
+</head>
+<body>
+    <div class="interface-wrapper">
+
+        <!-- Заголовок интерфейса -->
+        <header class="interface-header">
+            <div class="header-main">
+                <img class="header-logo" src="./img/logo/logo.png" alt="Kinsey logotype">  
+                <h1 class="header-title">KINSEY</h1> 
+                <p class="header-text"><span></span> slide</p>        
+            </div>            
+            <p class="header-description">Help system for code development</p>
+            <nav class="interface-navigation closed" id="navigationMenu">
+                <header class="panel-header">
+                    <h2 class="panel-title">sections:</h2>
+                    <button class="close-button" id="navigationCloseBtn">
+                        <img src="./img/icn/close-icon.png" alt="close">
+                    </button>
+                </header>
+                <ul class="navigation-list">
+                    <li>
+                        <button class="navigation-button">React</button>
+                    </li>
+                    <li>
+                        <button class="navigation-button" data-src="./sections/webpack-section/section-content.html">Webpack</button>
+                    </li>
+                    <li>
+                        <button class="navigation-button" data-src="./sections/ejs-section/section-content.html">EJS</button>  
+                    </li>
+                    <li>
+                        <button class="navigation-button" data-src="./sections/git-section/section-content.html">GIT</button>
+                    </li>
+                    <li>
+                        <button class="navigation-button" data-src="./sections/browser-section/section-content.html">Browser</button>
+                    </li>
+                    <li>
+                        <button class="navigation-button" data-src="./sections/js-section/section-content.html">JavaScript</button>
+                    </li>
+                </ul>
+            </nav>                         
+        </header>                
+
+        <!-- Основное содержимое -->
+        <div class="interface-content">            
+
+            <!-- Панель ссылок -->
+            <aside class="content-links closed" id="contentLinks">
+                <header class="panel-header">
+                    <h2 class="panel-title">links:</h2>
+                    <button class="close-button" id="linksCloseBth">
+                        <img src="./img/icn/close-icon.png" alt="close">
+                    </button>
+                </header>
+                <ul class="links-list">                                        
+                    <li>
+                        <ul>
+                            <h3 class="nested-list-header closed">GIT</h3>
+                            <li><a href="https://githowto.com/ru" class="content-link" target="_blank">githowto.com - руководство Git</a></li>
+                            <li><a href="https://git-scm.com/book/ru/v2" class="content-link" target="_blank">git-scm.com - руководство Git</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <ul>
+                            <h3 class="nested-list-header closed">Webpack</h3>
+                            <li><a href="https://webpack.js.org/concepts/" class="content-link" target="_blank">Документация Webpack</a></li>                            
+                        </ul>
+                    </li>
+                    <li>
+                        <ul>
+                            <h3 class="nested-list-header closed">EJS</h3>
+                            <li><a href="https://github.com/mde/ejs/blob/master/docs/syntax.md" class="content-link" target="_blank">Синтаксис EJS</a></li>                            
+                            <li><a href="https://github.com/mde/ejs/tree/master" class="content-link" target="_blank">Инструкция EJS</a></li>                            
+                        </ul>
+                    </li>
+                </ul>
+            </aside>
+            
+            <!-- Панель с контент-фреймом -->
+            <div class="content-frame-wrapper">
+                <iframe class="content-frame" src="./sections/frame-startup.html" id="main-frame"></iframe>                
+            </div>
+        </div> 
+
+        <!-- Футер интерфейса -->
+        <footer class="interface-footer">
+            <p>Cold Snow Studio<sup>©</sup> 2020 - 2058</p>
+            <p>Created on 18.10.2020</p>
+        </footer>
+    </div>
+    <script src="./js/interface.js"></script>
+</body>
+</html>

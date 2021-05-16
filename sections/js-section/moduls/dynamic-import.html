@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript content</title>
+    <link rel="stylesheet" href="../../../css/common-styles.css">
+    <link rel="stylesheet" href="../../../css/content-styles.css">
+</head>
+<body>
+
+    <!-- Содержимое начало -->
+    <!-- 
+        Для добавления форматированного блока кода использовать 
+        <code><pre data-formatted="js">code</pre></code>
+        сниппет - pref
+        
+        Для добавления справочного элемента использовать 
+         <span data-reference="Справочная информация">i</span>
+        сниппет - inf
+
+        Для добавления подзаголовка - subh
+        Для добавления текста - text
+        Для добавление внешней ссылки - olink
+    -->     
+    
+    <h2 class="content-header">Динамические импорты</h2>
+    <h3 class="content-subheader">HTML:</h3>
+    <code><pre data-formatted="html">
+    &lt;script src="./js/mainScript.js"&gt;&lt;/script&gt;
+    </pre></code>    
+    <p class="content-text">В html подключается только mainScript.js как обычный скрипт</p>
+
+    <h3 class="content-subheader">modul.js:</h3>
+    <code><pre data-formatted="js">
+    export let array = ['One', 'Two'];      <span data-reference="Экспорт массива array">i</span>
+    export const PI = 3.14;                 <span data-reference="Экспорт константы PI">i</span>
+    </pre></code>
+
+    <h3 class="content-subheader">user.js:</h3>
+    <code><pre data-formatted="js">
+    export default class User {             <span data-reference="Экспорт класса поумолчанию">i</span>
+        constructor(name) {
+            this.name = name;
+        }
+    }
+    </pre></code>
+
+    <h3 class="content-subheader">mainScript.js:</h3>
+    <code><pre data-formatted="js">
+    import('./modul.js')                                    <span data-reference="Функция import() возвращвет промис, результат которого - объект со свойствами из экспортированных элементов">i</span>
+    .then(object => {                                       <span data-reference="Результат промиса передается в then, где с ним можно работать">i</span>
+        alert(object.array);
+        alert(object.PI);
+    })
+    .catch(error => {                                       <span data-reference="Обработка возможных ошибок импорта">i</span>
+        alert(error.message);
+    })
+    
+    (async () => {                                          <span data-reference="Работа с промисом в асинхронной функции">i</span>
+        try {
+            let {PI, array} = await import('./modul.js');   <span data-reference="Деструктивное присваивание">i</span>
+            alert(PI + ' async');
+            alert(array);
+        } catch (error) {                                   <span data-reference="Обработка возможных ошибок импорта">i</span>
+            alert(error.message);
+        }
+    })();
+    
+    (async () => {                                              <span data-reference="Работа с промисом в асинхронной функции">i</span>
+        try {
+            const {default: User} = await import('./user.js');  <span data-reference="Деструктивное присваивание. Класс по умолчанию находится в свойстве объекта default ">i</span>
+            let vasya = new User('Vasya');
+            alert(vasya.name);
+        } catch (error) {                                       <span data-reference="Обработка возможных ошибок импорта">i</span>
+            alert(error.message);
+        }
+    })();
+    </pre></code>
+    <!-- Содержимое конец -->
+
+    <!-- Панель навигации внутри фрейма -->
+    <div class="content-navigation">
+        <p class="section-indicator">Javascript</p>   
+        <button class="navigation-button" id="navigation-back">◀</button>
+        <button class="navigation-button" id="navigation-reload">🗘</button>
+        <button class="navigation-button" id="navigation-next">▶</button>
+    </div>
+    <p id="reference-display"></p>
+    <script src="../../../js/content.js"></script> 
+</body>
+</html>

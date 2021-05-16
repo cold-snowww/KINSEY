@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript content</title>
+    <link rel="stylesheet" href="../../../css/common-styles.css">
+    <link rel="stylesheet" href="../../../css/content-styles.css">
+</head>
+<body>
+
+    <!-- Содержимое начало -->
+    <!-- 
+        Для добавления форматированного блока кода использовать 
+        <code><pre data-formatted="js">code</pre></code>
+        сниппет - pref
+        
+        Для добавления справочного элемента использовать 
+         <span data-reference="Справочная информация">i</span>
+        сниппет - inf
+
+        Для добавления подзаголовка - subh
+        Для добавления текста - text
+        Для добавление внешней ссылки - olink
+    -->     
+    
+    <h2 class="content-header">Даты и время</h2>
+    <code><pre data-formatted="js">
+    let date = new Date();                  <span data-reference="Создание текущего момента времени. Обьект Дата содержит число милисекунд прошедших с 1 января 1970 г. UTC (timestamp)">i</span>           
+        date = new Date(257842);            <span data-reference="Создание даты из timestamp">i</span>
+        date = new Date('04.04.1988');      <span data-reference="Создание даты из аргумента строки">i</span>
+        date = new Date(                    <span data-reference="Создание даты из числовых аргументов">i</span>
+            1988, 3, 4, 14, 0, 15, 8
+        );
+    
+    let i = date.getFullYear();             <span data-reference="Получение года из даты">i</span>
+        i = date.getMonth();                <span data-reference="Месяца (0 - янв, 11 - дек)">i</span>
+        i = date.getDate();                 <span data-reference="Дня (1 - 31)">i</span>
+        i = date.getDay();                  <span data-reference="Дня недели (0 - вс, 6 - сб)">i</span>
+        i = date.getHours();                <span data-reference="Часа (в местном часовом поясе)">i</span>
+        i = date.getMinutes();              <span data-reference="Минут">i</span>
+        i = date.getSeconds();              <span data-reference="Секунд">i</span>
+        i = date.getMilliseconds();         <span data-reference="Миллисекунд">i</span>
+        i = date.getUTC...();               <span data-reference="Методы, аналогичные предыдущим но использующие часовой пояс UTC">i</span>
+        i = date.getTime();                 <span data-reference="Timestamp'а">i</span>
+        i = date.getTimezoneOffset();       <span data-reference="Разница местного времени с UTC, в минутах">i</span>
+    
+    date.setFullYear(1988, 6, 9);           <span data-reference="Задание года (опционально месяц, день)">i</span>
+    date.setMonth(6, 9);                    <span data-reference="Задание месяца (опционально день)">i</span>
+    date.setDate(9);                        <span data-reference="Задание числа месяца">i</span>
+    date.setHours(18);                      <span data-reference="Задание часа (местный часовой пояс)">i</span>
+    date.setMinutes(15);                    <span data-reference="Задание минут">i</span>
+    date.setSeconds(30);                    <span data-reference="Задание секунд">i</span>
+    date.setMilliseconds(58);               <span data-reference="Задание миллисекунд">i</span>
+    date.setUTC...();                       <span data-reference="Методы, аналогичные предыдущим но использующие часовой пояс UTC">i</span>
+    date.setTime(978411253687);             <span data-reference="Задание timestamp'a">i</span>
+    
+    let now = new Date(2010, 10, 3);        
+    now.setMinutes(465);                    <span data-reference="При работе с датой, если задать значение больше диапазона, происходит пересчет, так 465 минут преобразуются в 7 часов 45 минут. Количество минут изменится на 45, а к часам прибавится 7 часов">i</span>
+    
+    let diff = now - date;                  <span data-reference="При математических операциях с датами, они преобразуются в таймштампы - с ними и осуществляются операции">i</span>
+    let strCurrent = Date();                <span data-reference="Получение текущей даты в виде строки в текущем часовом поясе">i</span>
+    let current = Date.now();               <span data-reference="Получение текущего таймштампа">i</span>
+    
+    let stamp = Date.parse(                 <span data-reference="Создание даты через шаблонную строку, формат строки по нормативу RFC2822">i</span>
+        '1988-04-04T14:00:20.258+07:00'
+    );   
+    </pre></code>    
+
+    <!-- Содержимое конец -->
+
+    <!-- Панель навигации внутри фрейма -->
+    <div class="content-navigation">
+        <p class="section-indicator">Javascript</p>   
+        <button class="navigation-button" id="navigation-back">◀</button>
+        <button class="navigation-button" id="navigation-reload">🗘</button>
+        <button class="navigation-button" id="navigation-next">▶</button>
+    </div>
+    <p id="reference-display"></p>
+    <script src="../../../js/content.js"></script> 
+</body>
+</html>

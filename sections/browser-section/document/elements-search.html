@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript content</title>
+    <link rel="stylesheet" href="../../../css/common-styles.css">
+    <link rel="stylesheet" href="../../../css/content-styles.css">
+</head>
+<body>
+
+    <!-- Содержимое начало -->
+    <!-- 
+        Для добавления форматированного блока кода использовать 
+        <pre data-formatted="js">code</pre>
+        сниппет - pref
+        
+        Для добавления справочного элемента использовать 
+         <span data-reference="Справочная информация">i</span>
+        сниппет - inf
+
+        Для добавления подзаголовка - subh
+        Для добавления текста - text
+        Для добавление внешней ссылки - olink
+        Для добавления изображения - coimg
+    -->     
+    
+    <h2 class="content-header">Поиск элементов в DOM дереве</h2>
+    <h3 class="content-subheader">Основные методы поиска элементов:</h3>
+    <img class="content-img" src="../../../img/sections-img/browser-section/elements-search.png" alt="Методы поиска элементов">  
+    <h3 class="content-subheader">Дополнительные методы:</h3>
+    <p class="content-text" data-formatted="text">
+        ˇelem.matches(selector)ˇ - проверяет удовлетворяет ли элемент переданному 
+        CSS-селектору, возвращает true/false<br><br>
+
+        ˇelem.closest(selector)ˇ - возвращает ближайшего предка элемнета, 
+        соответствующего переданному CSS-селектору. Сам элемент также включён в поиск.<br><br>
+
+        ˇelemA.contains(elemB)ˇ - вернёт true, если elemB находится внутри elemA 
+        (elemB потомок elemA) или если elemA == elemB
+    </p>  
+
+    <h3 class="content-subheader">HTML:</h3>
+    <pre data-formatted="html">
+        &lt;table id="table"&gt;
+            &lt;tr&gt;
+                &lt;td&gt;Ваш возраст:&lt;/td&gt;
+                &lt;td&gt;
+                    &lt;label&gt;
+                        &lt;input type="radio" name="age"&gt; младше 18
+                    &lt;/label&gt;
+                    &lt;label&gt;
+                        &lt;input type="radio" name="age"&gt; от 18 до 50
+                    &lt;/label&gt;
+                    &lt;label&gt;
+                        &lt;input type="radio" name="age"&gt; старше 60
+                    &lt;/label&gt;
+                &lt;/td&gt;
+            &lt;/tr&gt;
+        &lt;/table&gt;
+
+        &lt;div class="contents"&gt;
+        &lt;ul class="book"&gt;
+            &lt;li&gt; class="chapter"&gt;Глава 1&lt;/li&gt;
+            &lt;li&gt; class="chapter"&gt;Глава 2&lt;/li&gt;
+            &lt;li&gt; class="unique"&gt;Данные&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;/div&gt;
+    </pre>
+    
+    <h3 class="content-subheader">JS:</h3>
+    <pre data-formatted="js">
+    let table = document.getElementById('table');                       <span data-reference="Поиск элемента по id">i</span>
+    let element = document.querySelector('ul.book > li:last-child');    <span data-reference="Поиск первого элемента по CSS-селектору">i</span>
+    let collection = table.querySelectorAll('li');                      <span data-reference="Поиск всех элементов соответствующих CSS-селектору">i</span>
+    
+    let collOne = document.getElementsByName('age');                    <span data-reference="Поиск всех элементов по атрибуту name">i</span>
+    let collTwo = table.getElementsByTagName('label');                  <span data-reference="Поиск всех элементов по названию тега">i</span>
+    let collThree = document.getElementsByClassName('chapter');         <span data-reference="Поиск всех элементов по названию класса">i</span>    
+    
+    for(let element of collection) {
+        if(element.matches('.unique')) {                                <span data-reference="Если элемент соответствует селектору - true, условие выполнится">i</span>
+            console.log(element.innerText);        
+            let parent = element.closest('.book');                      <span data-reference="Найти ближайший элемент-предок, соответствующий переданному CSS-селектору">i</span>
+            console.log(`Ближайший предок ${parent.toString()}`);
+            console.log(
+                parent.contains(element)                                <span data-reference="Если parent содержит в себе element">i</span>
+            );
+        }
+    }</pre>
+
+    <!-- Содержимое конец -->
+
+    <!-- Панель навигации внутри фрейма -->
+    <div class="content-navigation">
+        <p class="section-indicator">Browser</p>   
+        <button class="navigation-button" id="navigation-back">◀</button>
+        <button class="navigation-button" id="navigation-reload">🗘</button>
+        <button class="navigation-button" id="navigation-next">▶</button>
+    </div>
+    <p id="reference-display"></p>
+    <script src="../../../js/content.js"></script> 
+</body>
+</html>

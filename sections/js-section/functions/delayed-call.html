@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript content</title>
+    <link rel="stylesheet" href="../../../css/common-styles.css">
+    <link rel="stylesheet" href="../../../css/content-styles.css">
+</head>
+<body>
+
+    <!-- Содержимое начало -->
+    <!-- 
+        Для добавления форматированного блока кода использовать 
+        <code><pre data-formatted="js">code</pre></code>
+        сниппет - pref
+        
+        Для добавления справочного элемента использовать 
+         <span data-reference="Справочная информация">i</span>
+        сниппет - inf
+
+        Для добавления подзаголовка - subh
+        Для добавления текста - text
+        Для добавление внешней ссылки - olink
+    -->     
+    
+    <h2 class="content-header">Отложенные вызовы</h2>
+    <h3 class="content-subheader">setTimeout:</h3>
+    <code><pre data-formatted="js">
+    function sayHi(name) {              <span data-reference="Функция для отложенного вызова">i</span>
+        console.log(`Hi ${name}`);
+    }
+    
+    let id = setTimeout(                <span data-reference="Отложенный вызов функции">i</span>
+        sayHi, 6000, 'John'             <span data-reference="Первый аргумент - вызываемая функция, второй время отсрочки в миллисекундах, третий - аргументы для передачи функции. Функция возвращает идентификатор таймера.">i</span>
+    );
+    
+    clearTimeout(id);                   <span data-reference="Выполнение отложенной функции можно отменить используя ее идентификатор таймера">i</span>
+
+    let id = setTimeout(                        <span data-reference="Аналогичный код с использованием стрелочной функции">i</span>
+        name => console.log(`Hi ${name}!`),
+        3000, 'Vasya'
+    );
+
+    setTimeout(() => console.log('Hi!'));       <span data-reference="Выполнение отложенной функции осуществляется планировщиком только после выполнения основного кода, поэтому даже с 0-ой задержкой сначала будет выведено Bye! и только потом Hi!">i</span>
+    console.log('Bye!');
+    </pre></code>    
+
+    <h3 class="content-subheader">setInterval:</h3>
+    <code><pre data-formatted="js">
+    let id = setInterval(                       <span data-reference="Настройка вызова функциис определенным интервалам. Аргументы аналогичны setTimeout">i</span>
+        name => console.log(`Amma ${name}`),    <span data-reference="Интервал отсчитывается между вызовами функции без учета времени на ее выполнение, поэтому он не точен">i</span>
+        1500, 'Jonny'
+    );
+    
+    clearInterval(id);                          <span data-reference="Отмена периодического вызова функции">i</span>
+    </pre></code>  
+
+    <h3 class="content-subheader">Рекурсивный вызов setTimeout:</h3>
+    <code><pre data-formatted="js">
+    function sayHi(name) {                              <span data-reference="Функция для периодического запуска">i</span>
+        console.log(`Hi ${name}!`);
+    }
+    
+    function delayedCall(func, time, ...args) {         <span data-reference="Рекурсивная функция, осуществляющая периодический запуск самой себя с заданным интервалом.">i</span>
+        func(...args);                                  
+        setTimeout(                                     <span data-reference="Запуск таймера осуществляется только после выполнения кода основной функции, что делает интервалы точнее. Вариант более гибок - можно изменять интервал и аргументы по ходу">i</span>
+            delayedCall, time, func, time, ...args
+        );
+    }
+    
+    delayedCall(sayHi, 1200, 'John');                   <span data-reference="Запуск периодического выполнения функции sayHi с интервалом 1,2с и аргументом 'John'">i</span>
+    </pre></code>
+
+    <!-- Содержимое конец -->
+
+    <!-- Панель навигации внутри фрейма -->
+    <div class="content-navigation">
+        <p class="section-indicator">Javascript</p>   
+        <button class="navigation-button" id="navigation-back">◀</button>
+        <button class="navigation-button" id="navigation-reload">🗘</button>
+        <button class="navigation-button" id="navigation-next">▶</button>
+    </div>
+    <p id="reference-display"></p>
+    <script src="../../../js/content.js"></script> 
+</body>
+</html>

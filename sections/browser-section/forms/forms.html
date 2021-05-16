@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript content</title>
+    <link rel="stylesheet" href="../../../css/common-styles.css">
+    <link rel="stylesheet" href="../../../css/content-styles.css">
+</head>
+<body>
+
+    <!-- Содержимое начало -->
+    <!-- 
+        Для добавления форматированного блока кода использовать 
+        <pre data-formatted="js">code</pre>
+        сниппет - pref
+        
+        Для добавления справочного элемента использовать 
+         <span data-reference="Справочная информация">i</span>
+        сниппет - inf
+
+        Для добавления подзаголовка - subh
+        Для добавления текста - text
+        Для добавление внешней ссылки - olink
+        Для добавление ссылки маркера - mlink
+        Для добавления изображения - coimg
+    -->     
+    
+    <h2 class="content-header">Формы</h2>
+    
+    <h3 class="content-subheader">Свойства и методы формы
+        <a href="https://learn.javascript.ru/form-elements#itogo" class="marked-link" target="_blank">➥</a>
+    </h3>
+    <p class="content-text" data-formatted="text">
+        document.forms.myForm, document.forms[0]</br>
+        myForm.elements.name, myForm.elements[0]</br>
+        fieldset.elements.name, fieldset.elements[0]</br>
+        </br>
+        element.form</br>
+        </br>
+        input/textarea.value, input.checked</br>
+        </br>
+        select.options[0], select.value/selectedIndex</br>
+        </br>
+        option = new Option(text, value, defaultSelected, selected);</br>
+        option.selected/index/text
+    </p>
+
+    <h3 class="content-subheader">Фокусировка: focus/blur
+        <a href="https://learn.javascript.ru/focus-blur#itogo" class="marked-link" target="_blank">➥</a>
+    </h3>
+    <p class="content-text" data-formatted="text">
+        'focus', 'blur', 'focusin', 'focusout'</br>
+        </br>
+        elem.focus(), elem.blur()</br>
+        </br>
+        tabindex="1"/"0"/"-1", elem.tabIndex</br>
+        </br>
+        document.activeElement
+    </p>
+
+    <h3 class="content-subheader">События: change, input, cut, copy, paste
+        <a href="https://learn.javascript.ru/events-change-input#itogo" class="marked-link" target="_blank">➥</a>
+    </h3>
+    <p class="content-text" data-formatted="text">
+        'change', 'input'</br>
+        'cut', 'copy', 'paste'</br>
+        </br>
+        event.clipboardData.getData('text/plain')</br>
+        event.clipboardData.clearData()</br>
+        event.clipboardData.setData()
+    </p>
+
+    <h3 class="content-subheader">Отправка формы
+        <a href="https://learn.javascript.ru/forms-submit" class="marked-link" target="_blank">➥</a>
+    </h3>
+    <p class="content-text" data-formatted="text">
+        'submit'</br>
+        form.submit()
+    </p>
+
+    <!-- Содержимое конец -->
+
+    <!-- Панель навигации внутри фрейма -->
+    <div class="content-navigation">
+        <p class="section-indicator">Browser</p>   
+        <button class="navigation-button" id="navigation-back">◀</button>
+        <button class="navigation-button" id="navigation-reload">🗘</button>
+        <button class="navigation-button" id="navigation-next">▶</button>
+    </div>
+    <p id="reference-display"></p>
+    <script src="../../../js/content.js"></script> 
+</body>
+</html>

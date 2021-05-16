@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript content</title>
+    <link rel="stylesheet" href="../../../css/common-styles.css">
+    <link rel="stylesheet" href="../../../css/content-styles.css">
+</head>
+<body>
+
+    <!-- Содержимое начало -->
+    <!-- 
+        Для добавления форматированного блока кода использовать 
+        <code><pre data-formatted="js">code</pre></code>
+        сниппет - pref
+        
+        Для добавления справочного элемента использовать 
+         <span data-reference="Справочная информация">i</span>
+        сниппет - inf
+
+        Для добавления подзаголовка - subh
+        Для добавления текста - text
+        Для добавление внешней ссылки - olink
+    -->     
+    
+    <h2 class="content-header">Примеси</h2>
+    <code><pre data-formatted="js">
+    class Man {                                         <span data-reference="Просто базовый класс">i</span>
+        constructor(name, age) {
+            this.name = name;
+            this.age = age;
+        }
+    }
+    
+    const mixin = {                                     <span data-reference="Миксин — объект содержащий дополнительные методы">i</span>
+        sayHi() {
+            return `Hi! I'm ${this.name}`;
+        },
+        introduce() {
+            return `${this.name}, ${this.age} y.o.`;
+        }
+    }
+    
+    function addMixin(className, mixin) {               <span data-reference="Функция для добавления методов миксина в класс. При этом методы копируются в прототип экземпляра">i</span>
+        Object.assign(className.prototype, mixin);
+    }
+    
+    addMixin(Man, mixin);                               <span data-reference="Добавления функциональности в класс">i</span>
+    
+    let jonny = new Man('John', 45);                    <span data-reference="Создание экземпляра класса">i</span>
+    
+    console.log(jonny.sayHi());                         <span data-reference="Вызов методов миксина в экземпляре класса">i</span>
+    console.log(jonny.introduce());                     <span data-reference="Вызов методов миксина в экземпляре класса">i</span>
+    </pre></code>    
+
+    <!-- Содержимое конец -->
+
+    <!-- Панель навигации внутри фрейма -->
+    <div class="content-navigation">
+        <p class="section-indicator">Javascript</p>   
+        <button class="navigation-button" id="navigation-back">◀</button>
+        <button class="navigation-button" id="navigation-reload">🗘</button>
+        <button class="navigation-button" id="navigation-next">▶</button>
+    </div>
+    <p id="reference-display"></p>
+    <script src="../../../js/content.js"></script> 
+</body>
+</html>

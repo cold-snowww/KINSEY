@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сетевые запросы</title>
+    <link rel="stylesheet" href="../../../css/common-styles.css">
+    <link rel="stylesheet" href="../../../css/content-styles.css">
+</head>
+<body>
+
+    <!-- Содержимое начало -->
+    <!-- 
+        Для добавления форматированного блока кода использовать 
+        <pre data-formatted="js">code</pre>
+        сниппет - pref
+        
+        Для добавления справочного элемента использовать 
+         <span data-reference="Справочная информация">i</span>
+        сниппет - inf
+
+        Для добавления подзаголовка - subh
+        Для добавления текста - text
+        Для добавление внешней ссылки - olink
+        Для добавление ссылки маркера - mlink
+        Для добавления изображения - coimg
+    -->     
+    
+    <h2 class="content-header">Сетевые запросы</h2>
+
+    <h3 class="content-subheader">Fetch
+        <a href="https://learn.javascript.ru/fetch#itogo" class="marked-link" target="_blank">➥</a>
+    </h3>    
+    <h3 class="content-subheader">Запросы GET:</h3>
+    <pre data-formatted="js">
+    Запросы GET:
+
+    let response = await fetch(url, options);
+
+    response.status                         <span data-reference="HTTP-код ответа.">i</span>
+    response.ok                             <span data-reference="true, если статус ответа в диапазоне 200-299.">i</span>
+    response.headers                        <span data-reference="Похожий на Map объект с HTTP-заголовками.">i</span>
+
+    response.text()                         <span data-reference="Возвращает ответ как обычный текст.">i</span>
+    response.json()                         <span data-reference="Преобразовывает ответ в JSON-объект.">i</span>
+    response.formData()                     <span data-reference="Возвращает ответ как объект FormData (кодировка form/multipart).">i</span>
+    response.blob()                         <span data-reference="Возвращает объект как Blob (бинарные данные с типом).">i</span>
+    response.arrayBuffer()                  <span data-reference="Возвращает ответ как ArrayBuffer (низкоуровневые бинарные данные).">i</span>
+    
+    let result = await response.json();</pre>
+
+    <h3 class="content-subheader">Пример запроса POST:</h3>
+    <pre data-formatted="js">
+    let response = await fetch(url, {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json;charset=utf-8'    <span data-reference="Если используется Blob тип указывать не надо">i</span>
+        },
+        body: JSON.stringify(object)                        <span data-reference="Если используется Blob то body: blob">i</span>
+    });</pre>
+
+    <h3 class="content-subheader">FormData
+        <a href="https://learn.javascript.ru/formdata#itogo" class="marked-link" target="_blank">➥</a>
+    </h3>
+    <pre data-formatted="js">
+    let formData = new FormData([form]);
+
+    let response = await fetch('/url', {        <span data-reference="Отправка данных формы (заголовок по умолчанию Content-Type: form/multipart) с использованием fetch, форма может содержать файлы, текст и т.д.">i</span>
+        method: 'POST',
+        body: formData
+    });
+    
+    formData.append(name, value)                <span data-reference="добавляет к объекту поле с именем name и значением value">i</span>
+    formData.append(name, blob, fileName)       <span data-reference="добавляет поле, как будто в форме имеется элемент input type='file', третий аргумент fileName устанавливает имя файла (не имя поля формы), как будто это имя из файловой системы пользователя">i</span>
+    formData.set(name, value)                   <span data-reference="удаляет все уже имеющиеся поля с именем name и только затем добавляет новое">i</span>
+    formData.set(name, blob, fileName)          <span data-reference="удаляет все уже имеющиеся поля с именем name, затем добавляет новое типа input type='file'">i</span>
+    formData.delete(name)                       <span data-reference="удаляет поле с заданным именем name">i</span>
+    formData.get(name)                          <span data-reference="получает значение поля с именем name">i</span>
+    formData.has(name)                          <span data-reference="если существует поле с именем name, то возвращает true, иначе false">i</span>
+    
+    for(let [name, value] of formData) {        <span data-reference="Поля объекта formData можно перебирать, используя цикл for..of">i</span>
+        console.log(`${name} = ${value}`);
+    }</pre>
+
+    <h3 class="content-subheader">Fetch: ход загрузки
+        <a href="https://learn.javascript.ru/fetch-progress" class="marked-link" target="_blank">➥</a>
+    </h3>
+    <pre data-formatted="js">
+    const reader = response.body.getReader();           <span data-reference="Получаем поток для чтения из тела запроса">i</span>
+    
+    while(true) {                                       <span data-reference="Бесконечный цикл, пока идёт загрузка">i</span>
+        const {done, value} = await reader.read();      <span data-reference="Результат вызова await reader.read() – это объект с двумя свойствами, done становится true в последнем фрагменте, value - Uint8Array из байтов каждого фрагмента">i</span>    
+        if (done) break;
+
+        console.log(`Получено ${value.length} байт`)   
+    }</pre>
+
+    <h3 class="content-subheader">Fetch: прерывание запроса
+        <a href="https://learn.javascript.ru/fetch-abort" class="marked-link" target="_blank">➥</a>
+    </h3>
+    <h3 class="content-subheader">Пример работы AbortController:</h3>
+    <pre data-formatted="js">
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    signal.addEventListener('abort', () => {        <span data-reference="Код который хочет узнать о вызове abort(), ставит обработчики на controller.signal, чтобы отслеживать вызов метода отмены.">i</span>
+        console.log('All instructions aborted!');
+    });
+
+    console.log(signal.aborted);                    <span data-reference="Свойство controller.signal.aborted до вызова abort() - false">i</span>
+    controller.abort();                             <span data-reference="Вызов метода отмены abort(), приводит к срабатыванию слушателя">i</span>
+    console.log(signal.aborted);                    <span data-reference="Свойство controller.signal.aborted после вызова abort() - true">i</span></pre>
+
+    <h3 class="content-subheader">Отмена fetch:</h3>
+    <pre data-formatted="js">
+    const controller = new AbortController();
+    setTimeout(() => controller.abort(), 50);                   <span data-reference="Отложенная отмена запроса fetch">i</span>
+
+    (async () => {
+        try {
+            let response = await fetch(                         <span data-reference="Метод fetch умеет работать с AbortController, он слушает событие abort на signal">i</span>
+                'https://jsonplaceholder.typicode.com/todos',
+                {signal: controller.signal}                     <span data-reference="Передаем объект signal опцией в метод fetch">i</span>
+            );
+        } catch (error) {
+            if(error.name === 'AbortError') {                   <span data-reference="Когда fetch отменяется, его промис завершается с ошибкой AbortError, поэтому мы должны обработать её">i</span>
+                console.log('Fetch aborted');
+            } else {
+                throw error;
+            }
+        }
+    })();</pre>
+
+    <h3 class="content-subheader">Остановка прочих асинхронных задач:</h3>
+    <pre data-formatted="js">
+    const controller = new AbortController();
+    setTimeout(() => controller.abort(), 1000);                 <span data-reference="Отложенная отмена асинхронной задачи">i</span>
+
+    new Promise((resolve, reject) => {
+        controller.signal.addEventListener('abort', reject);    <span data-reference="Подписываемся на вызов abort(), при этом reject передается объект события">i</span>
+        setTimeout(() => resolve('It\'s done!'), 3000);         
+    })
+        .then(
+            result => console.log(result),
+            event => console.log(event.type)                    <span data-reference="Обрабатываем отмену промиса">i</span>
+        );</pre>
+
+    <h3 class="content-subheader">Fetch: запросы на другие сайты
+        <a href="https://learn.javascript.ru/fetch-crossorigin#itogo" class="marked-link" target="_blank">➥</a>
+    </h3>
+
+    <h3 class="content-subheader">Fetch API
+        <a href="https://learn.javascript.ru/fetch-api" class="marked-link" target="_blank">➥</a>
+    </h3>
+    <pre data-formatted="js">
+    let promise = fetch(url, {
+        method: 'GET',                                      <span data-reference="Метод запроса POST, PUT, DELETE, etc.">i</span>
+        headers: {                                          <span data-reference="Заголовки обычно ставятся браузером, разрешены Accept, Accept-Language, Content-Language, Content-Type со значением application/x-www-form-urlencoded, multipart/form-data или text/plain">i</span>
+            'Content-Type': 'text/plain;charset=UTF-8'
+        },
+        body: undefined,                                    <span data-reference="Тело запроса string, FormData, Blob, BufferSource или URLSearchParams">i</span>
+        referrer: 'about:client',                           <span data-reference="Или '' для того, чтобы не послать заголовок Referer, или URL с текущего источника">i</span>
+        referrerPolicy: 'no-referrer-when-downgrade',       <span data-reference="Как fetch устанавливает HTTP-заголовок Referer: 'no-referrer', 'no-referrer-when-downgrade', 'origin', 'origin-when-cross-origin', 'same-origin', 'strict-origin', 'strict-origin-when-cross-origin', 'unsafe-url'">i</span>
+        mode: 'cors',                                       <span data-reference="Защита от нечаянной отправки запроса на другой источник: 'cors' – позволяет делать запросы на другие сайты, 'same-origin' – запросы на другой источник запрещены, 'no-cors' – разрешены только простые запросы на другой источник.">i</span>
+        credentials: 'same-origin',                         <span data-reference="Должен ли fetch отправлять куки и авторизационные заголовки HTTP вместе с запросом: 'same-origin' – не отправлять для запросов на другой источник, 'include' – отправлять всегда, но при этом необходим заголовок Access-Control-Allow-Credentials в ответе от сервера, 'omit' – не отправлять ни при каких обстоятельствах">i</span>
+        cache: 'default',                                   <span data-reference="Позволяет игнорировать HTTP-кеш или же настроить его использование: 'default', 'no-store', 'reload', 'no-cache', 'force-cache', 'only-if-cached'">i</span>
+        redirect: 'follow',                                 <span data-reference="Следование HTTP-редиректам, таким как 301, 302: 'follow' – следовать HTTP-редиректам, 'error' – ошибка в случае HTTP-редиректа, 'manual' – не следовать HTTP-редиректу, но установить адрес редиректа в response.url, а в response.redirected значение true">i</span>
+        integrity: '',                                      <span data-reference="Позволяет проверить, соответствует ли ответ известной заранее контрольной сумме">i</span>
+        keepalive: 'false',                                 <span data-reference="Указывает на то, что запрос может «пережить» страницу, которая его отправила">i</span>
+        signal: undefined,                                  <span data-reference="AbortController, чтобы прервать запрос">i</span>
+        window: window                                      <span data-reference="Обьект window или null">i</span>
+        });</pre>
+
+    <h3 class="content-subheader">Объекты URL
+        <a href="https://learn.javascript.ru/url" class="marked-link" target="_blank">➥</a>
+    </h3>
+    <pre data-formatted="js">
+    let url = new URL(url, [base]);
+
+    url.origin, url.protocol, url.host
+    url.hostname, url.port, url.pathname
+    url.search, url.hash
+
+    let url = new URL('https://google.com/search');
+    let params = url.searchParams;
+
+    params.append(name, value)      <span data-reference="добавить параметр по имени">i</span>
+    params.delete(name)             <span data-reference="удалить параметр по имени">i</span>
+    params.get(name)                <span data-reference="получить параметр по имени">i</span>
+    params.getAll(name)             <span data-reference="получить все параметры с одинаковым именем name (такое возможно, например: ?user=John&user=Pete)">i</span>
+    params.has(name)                <span data-reference="проверить наличие параметра по имени">i</span>
+    params.set(name, value)         <span data-reference="задать/заменить параметр">i</span>
+    params.sort()                   <span data-reference="отсортировать параметры по имени">i</span>
+
+    for(let [name, value] of url.searchParams) {
+        console.log(`${name}=${value}`); 
+    }
+
+    encodeURI(url)                  <span data-reference="кодирует URL-адрес целиком">i</span>
+    decodeURI(url)                  <span data-reference="декодирует URL-адрес целиком">i</span>
+    encodeURIComponent(url)         <span data-reference="кодирует компонент URL, например, параметр, хеш, имя пути и т.п">i</span>
+    decodeURIComponent(url)         <span data-reference="декодирует компонент URL">i</span></pre>
+
+    <h3 class="content-subheader">XMLHttpRequest
+        <a href="https://learn.javascript.ru/xmlhttprequest#itogo" class="marked-link" target="_blank">➥</a>
+    </h3>
+    <h3 class="content-subheader">Пример с запросом GET:</h3>
+    <pre data-formatted="js">
+    function sendRequest() {
+        let xhr = new XMLHttpRequest();                                     <span data-reference="Создать XMLHttpRequest">i</span>                   
+            xhr.open('GET', 'https://example.com');                         <span data-reference="Инициализировать его: xhr.open(method, URL, [async, user, password])">i</span>
+            
+            xhr.timeout = 10000;                                            <span data-reference="Мы можем также указать таймаут – промежуток времени, который мы готовы ждать ответ">i</span>
+            xhr.responseType = 'text';                                      <span data-reference="Мы можем использовать свойство xhr.responseType, чтобы указать ожидаемый тип ответа: '', 'text', 'arraybuffer', 'blob', 'document', 'json'">i</span>
+            xhr.setRequestHeader('Content-Type', 'application/json');       <span data-reference="Устанавливаем заголовок запроса с именем name и значением value">i</span>
+            xhr.withCredentials = true;                                     <span data-reference="Куки и заголовки HTTP-авторизации отсылаются на другой источник. Детали по заголовкам, которые при этом необходимы, смотрите в главе fetch.">i</span>
+            setTimeout(() => xhr.abort(), 10);                              <span data-reference="Если мы передумали делать запрос, можно отменить его, при этом генерируется событие abort">i</span>            
+        
+        xhr.on***                                                           <span data-reference="Возможные события: loadstart, progress, abort, error, load, timeout, loadend">i</span>
+        xhr.onload = function() {                                           <span data-reference="Событие происходит, когда получен какой-либо ответ, включая ответы с HTTP-ошибкой, например 404.">i</span>
+            if(xhr.status != 200) {                                         <span data-reference="status - Код состояния HTTP (число): 200, 404, 403 и так далее, может быть 0 в случае, если ошибка не связана с HTTP">i</span>
+                alert(`Ошибка: ${xhr.status}: ${xhr.statusText}`);         <span data-reference="statusText - Сообщение о состоянии ответа HTTP (строка): обычно OK для 200, Not Found для 404, Forbidden для 403, и так далее.">i</span>
+            } else {
+                alert(`Получено: ${xhr.response.length} байт`)              <span data-reference="response - это ответ сервера, в соответствии с responseType может быть ArrayBuffer, Blob, Document, JavaScript объектом (для 'json'), или строкой, null если запрос не завершен или окончен с ошибкой">i</span>
+            }
+        };
+
+        xhr.onprogress = function(event) {                                  <span data-reference="Событие происходит периодически во время загрузки ответа, сообщает о прогрессе">i</span>
+            let text = '';
+            if(event.lengthComputable) {                                    <span data-reference="event.lengthComputable равно true, если сервер присылает заголовок Content-Length">i</span>
+                text = `Получено ${event.loaded} из ${event.total} байт`;   <span data-reference="event.loaded - количество загруженных байт, event.total - количество байт всего (только если lengthComputable равно true)">i</span>
+            } else {
+                text = `Получено ${event.loaded} байт`;
+            } 
+            counter.textContent = text;
+        };
+
+        xhr.onerror = function() {                                          <span data-reference="Событие происходит когда запрос не может быть выполнен, например, нет соединения или невалидный URL">i</span>
+            alert('Ошибка запоса!');
+        };
+
+        xhr.ontimeout = function() {                                        <span data-reference="Если запрос не успевает выполниться в установленное время, то он прерывается, и происходит событие timeout">i</span>
+            alert('Время запроса вышло!');
+        }
+
+        xhr.onreadystatechange = function() {                               <span data-reference="Изменения в состоянии объекта запроса генерируют событие readystatechange">i</span>
+            console.log(xhr.readyState);                                    <span data-reference="Состояния объекта запроса: UNSENT = 0 OPENED = 1 HEADERS_RECEIVED = 2 LOADING = 3 DONE = 4">i</span> 
+            if(xhr.readyState === 2) {                                      <span data-reference="Получены заголовки ответа">i</span>
+                console.log(xhr.getResponseHeader('Content-Type'));         <span data-reference="getResponseHeader(name) - возвращает значение заголовка ответа name (кроме Set-Cookie и Set-Cookie2)">i</span>
+                console.log(xhr.getAllResponseHeaders());                   <span data-reference="getAllResponseHeaders() - возвращает все заголовки ответа, кроме Set-Cookie и Set-Cookie2, в виде единой строки. Между заголовками стоит перевод строки в два символа '\r\n'">i</span>
+            }
+        }
+
+        xhr.onabort = function() {                                          <span data-reference="Событие abort, при вызове xhr.abort()">i</span>
+            alert('Запрос отменен!');
+            console.log(xhr.status);                                        <span data-reference="xhr.status устанавливается в 0">i</span>
+        }
+
+        xhr.send();                                                         <span data-reference="Послать запрос">i</span>
+    }</pre>
+
+    <h3 class="content-subheader">Пример с запросом POST</h3>
+    <pre data-formatted="js">
+    function sendRequest() {
+        let formData = new FormData(form);
+        let url = 'https://jsonplaceholder.typicode.com/posts';
+
+        let xhr = new XMLHttpRequest();                                     <span data-reference="Создать XMLHttpRequest">i</span>
+            xhr.open('POST', url);                                          <span data-reference="Инициализировать его">i</span>
+            xhr.setRequestHeader(                                           <span data-reference="Обычно форма отсылается в кодировке multipart/form-data">i</span> 
+                'Content-type', 'application/json; charset=utf-8'           <span data-reference="Для формата JSON, нужно поставить заголовок Content-Type: application/json">i</span>
+            );                          
+
+        xhr.onload = () => {                                                <span data-reference="После отправки данных, мы получим ответ сервера в xhr.response, при этом произойдет событие load">i</span>
+            console.log(xhr.response);
+        };
+
+        xhr.upload.***                                                      <span data-reference="Возможные события: loadstart, progress, abort, error, load, timeout, loadend">i</span>
+        xhr.upload.onloadstart = () => {                                    <span data-reference="Начало загрузки данных">i</span>
+            console.log('Загрузка на сервер началась');
+        };
+        xhr.upload.onprogress = e => {                                      <span data-reference="Генерируется периодически во время отправки на сервер">i</span>
+            console.log(`Загружено ${e.loaded} из ${e.total}`);             
+        };          
+        xhr.upload.onload = () => {                                         <span data-reference="Загрузка успешно завершена">i</span>
+            console.log('Данные успешно загружены');
+        };
+        xhr.upload.onerror = () => {                                        <span data-reference="Ошибка, не связанная с HTTP">i</span>
+            console.log(`Ошибка загрузки ${xhr.status}`);
+        };    
+        
+        xhr.send(formData);                                                 <span data-reference="Отправка данных, можно отправить JSON, Blob, BufferSource, FormData, URLSearchParams, ReadableStream, или объект USVString">i</span>
+    }</pre>
+
+    <h3 class="content-subheader">Возобновляемая загрузка файлов
+        <a href="https://learn.javascript.ru/resume-upload" class="marked-link" target="_blank">➥</a>
+    </h3>
+    <pre data-formatted="js">
+    let fileId = `${file.name}-${file.size}-${file.lastModifiedDate}`;      <span data-reference="Создадим уникальный идентификатор файла, который собираемся загружать">i</span>
+
+    let response = await fetch(url, {                                       <span data-reference="Посылаем запрос к серверу с просьбой указать количество уже полученных байтов">i</span>
+        headers: {'X-File-Id': fileId}                                      <span data-reference="Сервер учитывает загружаемые файлы с помощью заголовка X-File-Id">i</span>
+    });
+    let startByte = await +response.text();                                 <span data-reference="Количество байтов, полученное сервером ранее. Если файл серверу неизвестен, то он ответит 0">i</span>
+
+    let xhr = new XMLHttpRequest();
+        xhr.open('POST', url);
+        xhr.setRequestHeader('X-File-Id', fileId);                          <span data-reference="Идентификатор файла, чтобы сервер знал, что мы загружаем">i</span>
+        xhr.setRequestHeader('X-Start-Byte', startByte);                    <span data-reference="Номер байта, начиная с которого мы будем отправлять данные">i</span>
+    xhr.upload.onprogress = e => {
+        console.log(
+            `Uploaded ${startByte + e.loaded} of ${startByte + e.total}`    
+        );
+    };
+    xhr.send(file.slice(startByte));                                        <span data-reference="Затем мы использовуем метод slice объекта Blob, чтобы отправить данные, начиная со startByte байта">i</span></pre>
+
+    <h3 class="content-subheader">Длинные опросы
+        <a href="https://learn.javascript.ru/long-polling" class="marked-link" target="_blank">➥</a>
+    </h3>
+    <pre data-formatted="js">
+    async function subscribe() {
+        let response = await fetch(url);            <span data-reference="Отправить запрос на подключение">i</span>
+
+        if(response.status == 502) {                <span data-reference="Статус 502 - это таймаут соединения, возможен, когда соединение ожидало слишком долго, и сервер закрыл его">i</span>
+            await subscribe();                      <span data-reference="Восстановить подключение">i</span>
+        } else if(response.status != 200) {         <span data-reference="Какая-то ошибка, покажем её">i</span>
+            showMessage(response.statusText);
+            await new Promise(resolve =>    
+                setTimeout(resolve, 1000)
+            );
+            await subscribe();                      <span data-reference="Подключимся снова через секунду.">i</span>
+        } else {
+            let message = await response.text();    <span data-reference="Получим и покажем сообщение">i</span>
+            showMessage(message);
+            await subscribe();                      <span data-reference="И снова вызовем subscribe() для получения следующего сообщения">i</span>
+        }
+    }</pre>
+
+    <h3 class="content-subheader">WebSocket
+        <a href="https://learn.javascript.ru/websocket#itogo" class="marked-link" target="_blank">➥</a>
+    </h3>
+    <pre data-formatted="js">
+    let socket = new WebSocket('wss://javascript.info');                <span data-reference="Создать объект  WebSocket, указав в url-адресе специальный протокол ws или wss">i</span>
+        socket.bufferType = 'arraybuffer';                              <span data-reference="При получении данных, текст поступает в виде строки. Для бинарных данных можно выбрать Blob или ArrayBuffer, указав в bufferType, по умолчанию равно 'blob'">i</span>
+
+    socket.onopen = function (e) {                                      <span data-reference="Событие происходит если соединение установлено">i</span>
+        console.log(`Соединение установлено: ${socket.readyState}`);    <span data-reference="socket.readyState - состояние соединения, 0 – 'CONNECTING': соединение ещё не установлено, 1 – 'OPEN': обмен данными, 2 – 'CLOSING': соединение закрывается, 3 – 'CLOSED': соединение закрыто.">i</span>
+        console.log('Отправка данных на сервер...');            
+        socket.send('Меня зовут Джон');                                <span data-reference="Вызов socket.send(body) принимает body в виде строки или любом бинарном формате включая Blob, ArrayBuffer и другие, и отправляет их на сервер.">i</span>
+
+        setInterval(() => {                                             <span data-reference="Отправка большого количества данных при медленном соединении.">i</span>
+            if(socket.bufferedAmount == 0) {                            <span data-reference="Свойство socket.bufferedAmount хранит количество байт буферизованных данных на текущий момент, ожидающих отправки по сети.">i</span>
+                socket.send(data);
+            }
+        }, 100);
+    };
+
+    socket.onmessage = function (e) {                                   <span data-reference="Событие происходит если получены данные">i</span>
+        console.log(`Данные получены с сервера: ${e.data}`);            <span data-reference="В e.data - данные полученные по сети. Является строкой (если текст) или arraybuffer/blob (если двоичные данные)">i</span>
+    };
+
+    socket.onclose = function (e) {                                     <span data-reference="Событие происходит если соединение закрыто">i</span>
+        if (e.wasClean) {                                               <span data-reference="Возвращает, true/false что указывает, было ли соединение закрыто полностью">i</span>
+            console.log('Соединение закрыто чисто');
+            console.log(`Код ${e.code}, причина ${e.reason}`);          <span data-reference="e.code – специальный WebSocket-код закрытия, e.reason – строка с описанием причины закрытия.">i</span>
+        } else {
+            console.log('Соединение сброшено');
+        }
+    };
+
+    socket.onerror = function (e) {                                     <span data-reference="Событие происходит если ошибка">i</span>
+        console.log(`[error] ${e.message}`);
+    };
+
+    setTimeout(() => {
+        socket.close(1000, 'Work is done!');                            <span data-reference="Метод закрывает соединение, шаблон - socket.close([code], [reason]) где code – специальный WebSocket-код закрытия, reason – строка с описанием причины закрытия">i</span>
+    }, 5000);</pre>
+    <a href="https://tools.ietf.org/html/rfc6455#section-7.4.1" class="outside-link" target="_blank">
+        Описание кодов закрытия WebSocket
+    </a>
+
+    <h3 class="content-subheader">Server Sent Events
+        <a href="https://learn.javascript.ru/server-sent-events#itogo" class="marked-link" target="_blank">➥</a>
+    </h3>
+    <pre data-formatted="js">
+    let eventSource;
+
+    function connect() {                                                <span data-reference="Функция для подключения к серверу">i</span>
+        if(window.EventSource) {                                        <span data-reference="Internet Explorer или устаревшие браузеры">i</span>
+            alert('Browser doesn\'t support EventSource');
+            return;
+        }
+        eventSource = new EventSource('url');                           <span data-reference="Чтобы начать получать данные, нужно создать new EventSource(url).">i</span>
+
+        eventSource.addEventListener('open', e => {                     <span data-reference="Событие происходит когда соединение открыто">i</span>
+            log('Event: open');
+        });
+
+        eventSource.addEventListener('message', e => {                  <span data-reference="Событие происходит когда получено сообщение">i</span>
+            log(`Event: message, data: ${e.data}`);                     <span data-reference="Полученное сообщение доступно как e.data">i</span>
+            log(`Last message: ${eventSource.lastEventId}`);            <span data-reference="eventSource.lastEventId - id последнего полученного сообщения. При переподключении браузер посылает его в заголовке Last-Event-ID">i</span>
+        });
+
+        eventSource.addEventListener('error', function(e) {             <span data-reference="Событие происходит когда не удалось установить соединение, например, сервер вернул статус 500">i</span>
+            log('Event: error');
+            if(this.readyState === EventSource.CONNECTING) {            <span data-reference="Мы можем обратиться к свойству readyState, чтобы проверить, происходит ли переподключение">i</span>
+                log(`Reconnecting (readyState=${this.readyState})`);    <span data-reference="readyState - текущее состояние подключения: EventSource.CONNECTING (=0), EventSource.OPEN (=1) или EventSource.CLOSED (=2)">i</span>
+            } else {
+                log('Event: error');
+            }
+        });
+
+        eventSource.addEventListener('bye', e => {                      <span data-reference="Сервер может выставить собственное событие с помощью event:. Такие события должны быть обработаны с помощью addEventListener, а не onevent">i</span>
+            log(`Event: bye, data: ${e.data}`);                         
+        });
+    }
+
+    function disconnect() {                                             <span data-reference="Функция для отключения от сервера">i</span>
+        eventSource.close();                                            <span data-reference="Метод закрывает соединение.">i</span>
+        log('Event: connection closed');
+    }
+
+    function log(message) {
+        logElem.innerHTML += message + '</br>';
+        document.documentElement.scrollTop = 999999999;                 
+    }
+    </pre>
+    <!-- Содержимое конец -->
+
+    <!-- Панель навигации внутри фрейма -->
+    <div class="content-navigation">
+        <p class="section-indicator">Browser</p>   
+        <button class="navigation-button" id="navigation-back">◀</button>
+        <button class="navigation-button" id="navigation-reload">🗘</button>
+        <button class="navigation-button" id="navigation-next">▶</button>
+    </div>
+    <p id="reference-display"></p>
+    <script src="../../../js/content.js"></script> 
+</body>
+</html>

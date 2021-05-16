@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript content</title>
+    <link rel="stylesheet" href="../../../css/common-styles.css">
+    <link rel="stylesheet" href="../../../css/content-styles.css">
+</head>
+<body>
+
+    <!-- Содержимое начало -->
+    <!-- 
+        Для добавления форматированного блока кода использовать 
+        <code><pre data-formatted="js">code</pre></code>
+        сниппет - pref
+        
+        Для добавления справочного элемента использовать 
+         <span data-reference="Справочная информация">i</span>
+        сниппет - inf
+
+        Для добавления подзаголовка - subh
+        Для добавления текста - text
+        Для добавление внешней ссылки - olink
+    -->     
+    
+    <h2 class="content-header">Остаточные параметры, расширение</h2>
+    <h3 class="content-subheader">Сбор остаточных параметров:</h3>
+    <code><pre data-formatted="js">
+    function sum(arg1, arg2, ...args) { <span data-reference="При вызове функции, аргументы начиная с 3-го будут собраны в массив args, доступный внутри функции">i</span>
+        let result = arg1 + arg2;
+        for(let i of args) {            <span data-reference="Обработка значений, собранных  в массив args">i</span>
+            result += i;
+        }
+        return result;
+    }
+    </pre></code>    
+
+    <h3 class="content-subheader">Псевдомассив arguments</h3>
+    <code><pre data-formatted="js">
+    function sum(arg1, arg2, arg3) {    <span data-reference="Функция вызываемая с переменным числом аргументов">i</span>
+        let result = 0;
+        for(let i of arguments) {       <span data-reference="Аргументы каждой функции при ее вызове, сохраняются в псевдомассиве arguments это можно использовать для доступа к ним">i</span>
+            result += i;
+        }
+        return result;
+    }
+    </pre></code>
+
+    <h3 class="content-subheader">Оператор расширения при вызове функции:</h3>
+    <code><pre data-formatted="js">
+    function sum(arg1, arg2, arg3) {    <span data-reference="Функция вызываемая с переменным числом аргументов">i</span>
+        let result = 0;
+        for(let i of arguments) {
+            result += i;
+        }
+        return result;
+    }
+    
+    let args = [3, 8, 6];               <span data-reference="Массив, содержащий числа аргументы">i</span>
+    let result = sum(3, 5, ...args);    <span data-reference="При вызове функции, оператор расширения раскладывает массив на элементы, и использует их как аргументы функции">i</span>
+    </pre></code>
+
+    <h3 class="content-subheader">Оператор расширения для работы с массивами:</h3>
+    <code><pre data-formatted="js">
+    let numbs1 = [1, 5, 3];                     <span data-reference="Массив с числами">i</span>
+    let numbs2 = [6, 8, 7];                     <span data-reference="Массив с числами">i</span>
+    
+    let merged = [...numbs1, ...numbs2, 9];     <span data-reference="Оператор расширения ... раскладывает массив на значения, которые дальше используются для создания нового массива">i</span>
+    
+    let str = 'Just string';                    <span data-reference="Строка - как частный случай итерируемого объекта">i</span>
+    let array = [...str];                       <span data-reference="Оператор расширения раскладывает итерируемый обьект на элементы символы и заполняет ими новый массив">i</span>
+    </pre></code>
+
+    <!-- Содержимое конец -->
+
+    <!-- Панель навигации внутри фрейма -->
+    <div class="content-navigation">
+        <p class="section-indicator">Javascript</p>   
+        <button class="navigation-button" id="navigation-back">◀</button>
+        <button class="navigation-button" id="navigation-reload">🗘</button>
+        <button class="navigation-button" id="navigation-next">▶</button>
+    </div>
+    <p id="reference-display"></p>
+    <script src="../../../js/content.js"></script> 
+</body>
+</html>

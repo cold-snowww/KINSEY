@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript content</title>
+    <link rel="stylesheet" href="../../../css/common-styles.css">
+    <link rel="stylesheet" href="../../../css/content-styles.css">
+</head>
+<body>
+
+    <!-- Содержимое начало -->
+    <!-- 
+        Для добавления форматированного блока кода использовать 
+        <code><pre data-formatted="js">code</pre></code>
+        сниппет - pref
+        
+        Для добавления справочного элемента использовать 
+         <span data-reference="Справочная информация">i</span>
+        сниппет - inf
+
+        Для добавления подзаголовка - subh
+        Для добавления текста - text
+        Для добавление внешней ссылки - olink
+    -->     
+    
+    <h2 class="content-header">Преобразование объекта в примитив</h2>
+    <code><pre data-formatted="js">
+    let obj = {                                     <span data-reference="Объект с двумя свойствами">i</span>
+        name: 'John',
+        age: 18,
+    
+        [Symbol.toPrimitive](hint) {                <span data-reference="Основной метод, который вызывается при преобразованиии объекта в примитив">i</span>    
+            if(hint == 'string') return this.name;  <span data-reference="Хинт 'string' используется при преобразовании в строку">i</span>
+            if(hint == 'number') return this.age;   <span data-reference="Хинт 'number' используется при преобразовании в число">i</span>
+            if(hint == 'default') return this.age;  <span data-reference="Хинт 'default' используется редко и обычно обрабатывается так же, как 'number'">i</span>
+        },
+    
+        valueOf() {                                 <span data-reference="Если метод Symbol.toPrimitive отсутствует, а хинт 'number' или 'default' вызывается valueOf(), если и его нет то toString()">i</span>
+            return this.age;
+        },
+    
+        toString() {                                <span data-reference="Если метод Symbol.toPrimitive отсутствует, а хинт 'string' вызывается toString(), если и его нет то valueOf()">i</span>
+            return this.name;
+        }
+    };
+    </pre></code>    
+
+    <!-- Содержимое конец -->
+
+    <!-- Панель навигации внутри фрейма -->
+    <div class="content-navigation">
+        <p class="section-indicator">Javascript</p>   
+        <button class="navigation-button" id="navigation-back">◀</button>
+        <button class="navigation-button" id="navigation-reload">🗘</button>
+        <button class="navigation-button" id="navigation-next">▶</button>
+    </div>
+    <p id="reference-display"></p>
+    <script src="../../../js/content.js"></script> 
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript content</title>
+    <link rel="stylesheet" href="../../../css/common-styles.css">
+    <link rel="stylesheet" href="../../../css/content-styles.css">
+</head>
+<body>
+
+    <!-- Содержимое начало -->
+    <!-- 
+        Для добавления форматированного блока кода использовать 
+        <code><pre data-formatted="js">code</pre></code>
+        сниппет - pref
+        
+        Для добавления справочного элемента использовать 
+         <span data-reference="Справочная информация">i</span>
+        сниппет - inf
+
+        Для добавления подзаголовка - subh
+        Для добавления текста - text
+        Для добавление внешней ссылки - olink
+    -->     
+    
+    <h2 class="content-header">Циклы и инструкции</h2>
+    <h3 class="content-subheader">Циклы</h3>
+
+    <p class="content-text">Цикл while:</p>
+    <code><pre data-formatted="js">
+    while(i < 3) {
+        console.log(i);
+        i++;
+    }
+    </pre></code>  
+    
+    <p class="content-text">Цикл do-while</p>
+    <code><pre data-formatted="js">
+        do {
+            console.log(i);
+            i++;
+        } while(i < 3);
+    </pre></code>
+
+    <p class="content-text">Цикл for:</p>
+    <code><pre data-formatted="js">
+        for(let i = 0; i < 5; i++) {                    <span data-reference="Любая часть внутри for() может отсутствовать">i</span>
+            console.log(i);
+        }
+    </pre></code>
+
+    <p class="content-text">Использование меток в циклах:</p>
+    <code><pre data-formatted="js">
+        lebel:  for(let i = 0; i < 10; i++) {           <span data-reference="Внешний цикл помечен label">i</span>
+                    if(i == 2) continue;                <span data-reference="Директива continue немедленно начинает новую итерацию текущего цикла не дожидаясь выполнения до конца">i</span>
+                    if(i == 8) break;                   <span data-reference="Директива break приводит к немедленному выходу из текущего цикла">i</span>
+                    for(let j = 5; j > 0; j++) {        <span data-reference="Внутренний цикл">i</span>
+                        if(j == 2) continue label;      <span data-reference="Директива continue начинает новую итерацию внешнего цикла">i</span>
+                        if(j == 3) break label;         <span data-reference="Директива break прерывает внешний цикл">i</span>
+                    }
+                }
+    </pre></code>
+
+    <h3 class="content-subheader">Инструкции</h3>
+
+    <p class="content-text">Условный оператор if:</p>
+    <code><pre data-formatted="js">
+    if(value) console.log(value);               <span data-reference="Значение внутри if() всегда преобразуется к логическому типу. Если инструкция всего одна - фигурные скобки могут отсутствовать">i</span>
+    
+    if(a > 5) console.log(value);               <span data-reference="Блок else не обязателен">i</span>
+        else console.log('escape'); 
+
+    if(value) {                                 <span data-reference="Если инструкций больше чем одна - нужны фигурные скобки">i</span>
+        console.log(value);
+        value + 2;
+    } else {
+        console.log('escape')
+        value - 2;
+    }
+
+    if(value) { 
+        console.log(value);
+        value + 2;
+    } else if(nextValue) {                      <span data-reference="Дополнительное условие, их может быть несколько">i</span>
+        console.log('go')
+        value + 1;
+    } else {
+        console.log('escape')
+        value - 2;
+    }
+    </pre></code>
+
+    <p class="content-text">Тернарный оператор:</p>
+    <code><pre data-formatted="js">
+    let result = (a > 5) ? 'go' : 'escape';     <span data-reference="Если а больше 5, значение result 'go', если нет - 'escape'. Использовать тернарный оператор нужно только со значениями, с функциями используют if()">i</span>
+
+    let result = (a > 5) ? 'less' :             <span data-reference="Тернарный оператор с множественными условиями">i</span>
+                 (a < 5) ? 'more':
+                 (a == 5) ? 'equals':
+                 'none';                        <span data-reference="Значение none - если не одно условие не подошло">i</span>
+    </pre></code>
+
+    <p class="content-text">Конструкция switch</p>
+    <code><pre data-formatted="js">
+    let key = 5;                                <span data-reference="Ключ равен 5">i</span>
+
+    switch (key) {
+        case '5':                               <span data-reference="Проверка на соответствие значению '5'. Проверка не пройдена так как используется ===, cписок инструкций не выполнится">i</span>
+            console.log('0');               
+            break;                          
+        case 5:                                 <span data-reference="Проверка на соответствие значению 5. Проверка пройдена, выполнение cписка инструкций">i</span>
+            console.log('5');                   <span data-reference="Вывод в консоль '5'">i</span>
+            break;                              <span data-reference="Прерывание конструкции switch">i</span>
+        case 8:                                 <span data-reference="Группировка case">i</span>
+        case 11:
+            console.log('8 or 11');
+            break;
+        default:                                <span data-reference="Инструкции по умолчанию, не выполнятся, так как конструкция switch ранее была прервана break. Выполняются если не одно условие не подошло">i</span>
+            console.log('Log anyway');
+    }
+    
+    switch (key) {    
+        case (3+2):                             <span data-reference="Проверка на соответствие выражению. Проверка пройдена, выполнение cписка инструкций">i</span>
+            console.log('3+2');                 <span data-reference="Вывод в консоль '5'">i</span>
+        case 18:                                <span data-reference="Проверка не производится, выполнение списка инструкций, так как оператор break отсутствовал в предыдущей инструкции">i</span>
+            console.log('18');                  <span data-reference="Вывод в консоль '18'. Оператор break отсутствует - переход к выполнению инструкций в блоке default">i</span>
+        default:            
+            console.log('Log anyway');          <span data-reference="Вывод в консоль 'Log anyway'">i</span>
+    }
+    </pre></code>
+    <!-- Содержимое конец -->
+
+    <!-- Панель навигации внутри фрейма -->
+    <div class="content-navigation">
+        <p class="section-indicator">Javascript</p>   
+        <button class="navigation-button" id="navigation-back">◀</button>
+        <button class="navigation-button" id="navigation-reload">🗘</button>
+        <button class="navigation-button" id="navigation-next">▶</button>
+    </div>
+    <p id="reference-display"></p>
+    <script src="../../../js/content.js"></script> 
+</body>
+</html>

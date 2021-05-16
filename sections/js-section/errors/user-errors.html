@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript content</title>
+    <link rel="stylesheet" href="../../../css/common-styles.css">
+    <link rel="stylesheet" href="../../../css/content-styles.css">
+</head>
+<body>
+
+    <!-- Содержимое начало -->
+    <!-- 
+        Для добавления форматированного блока кода использовать 
+        <code><pre data-formatted="js">code</pre></code>
+        сниппет - pref
+        
+        Для добавления справочного элемента использовать 
+         <span data-reference="Справочная информация">i</span>
+        сниппет - inf
+
+        Для добавления подзаголовка - subh
+        Для добавления текста - text
+        Для добавление внешней ссылки - olink
+    -->     
+    
+    <h2 class="content-header">Пользовательские ошибки</h2>
+    <h3 class="content-subheader">Создаем классы пользовательских ошибок:</h3>
+    <code><pre data-formatted="js">
+    class ParsingError extends Error {                      <span data-reference="Базовый класс ошибок, потенциально возникающих при вызове readUser()">i</span>
+        constructor(message) {
+            super(message);
+            this.name = this.constructor.name;              <span data-reference="Имя ошибки считывается из класса, с помощью которого она была создана (через свойство prototype.constructor.name)">i</span>
+        }
+    }
+    
+    class ReadingError extends ParsingError {               <span data-reference="Класс-обертка для всех возможных ошибок, где reason объект ошибки, возникшей при выполнении">i</span>
+        constructor(message, reason) {
+            super(message);
+            this.reason = reason;                           <span data-reference="Объект ошибки сохраняется в свойстве reason">i</span>
+        }
+    }
+    
+    class MissingPropertyError extends ParsingError {       <span data-reference="Класс ошибок, возникающих при отсутствии необходимого свойства">i</span>
+        constructor(property) {
+            super(`Отсутствует свойство ${property}`);       <span data-reference="Вызов конструктора ParsingError и формирование сообщение в качестве его аргумента">i</span>
+            this.property = property;                       <span data-reference="Имя отсутствующего свойства хранится в свойстве property объекта ошибки">i</span>
+        }
+    }
+    
+    class WrongTypeError extends ParsingError {             <span data-reference="Класс ошибок, возникающих при неверном типе необходимого свойства">i</span>
+        constructor(property) {
+            super(`Неверный тип свойства ${property}`);     <span data-reference="Вызов конструктора ParsingError и формирование сообщение в качестве его аргумента">i</span>
+            this.property = property;                       <span data-reference="Имя свойства с неверным типом значения хранится в свойстве property объекта ошибки">i</span>
+        }
+    }
+    </pre></code>    
+
+    <h3 class="content-subheader">Функция для чтения пользователя из JSON:</h3>
+    <code><pre data-formatted="js">
+    function readUser(json, template) {                         <span data-reference="Функция для чтения объекта из JSON, template – шаблон для валидации объекта">i</span>
+        let user;
+    
+        try {                                                   <span data-reference="Блок try-catch, в котором осуществляется чтение объекта из строки JSON. Если строка JSON некорректна - возникнет SyntaxError">i</span>
+            user = JSON.parse(json);
+        } catch (error) {
+            if(error instanceof SyntaxError) {                  <span data-reference="Если ошибка относится к SyntaxError, она оборачивается в ReadingError и выбрасывается наружу">i</span>
+                throw new ReadingError(
+                    error.message, error
+                );
+            } else {
+                throw error;                                    <span data-reference="Если ошибка не относится к SyntaxError, она пробрасывается наружу">i</span>
+            }
+        }
+    
+        try {                                                   <span data-reference="Блок try-catch, в котором осуществляется валидация считанного объекта в соответствии с шаблоном template">i</span>
+            for(let i in template) {
+                if(!user[i]) {                                  <span data-reference="Если в объекте нет нужного ссвойства выбрасывается MissingPropertyError">i</span>
+                    throw new MissingPropertyError(i);
+                } else if(typeof user[i] !== template[i]) {     <span data-reference="Если свойство объекта имеет неверный тип выбрасывается WrongTypeError">i</span>
+                    throw new WrongTypeError(i);
+                }
+            }
+            return user;                                        <span data-reference="Если ни одна из ошибок не выброшена, функция возвращает прочитанный объект user">i</span>
+        } catch (error) {
+            if(error instanceof ParsingError) {                 <span data-reference="Если ошибка возникшая в блоке try принадлежит к нашему классу ParsingError, она оборачивается в ReadingError и выбрасывается наружу">i</span>
+                throw new ReadingError(
+                    error.message, error
+                );
+            } else {
+                throw error;                                    <span data-reference="Иначе ошибка пробрасывается наружу">i</span>
+            }
+        }
+    }
+    </pre></code>
+
+    <h3 class="content-subheader">Чтение пользователя из JSON:</h3>
+    <code><pre data-formatted="js">
+    let json = '{"name": "John", "age": "18"}';     <span data-reference="JSON для чтения">i</span>
+
+    let template = {                                <span data-reference="Объект шаблона для валидации полученных объектов">i</span>
+        name: 'string',
+        age: 'number'
+    };
+    
+    try {                                           <span data-reference="Пытаемся считать пользователя, возможно возникновение ошибок">i</span>
+        readUser(json, template);
+    } catch (error) {                               <span data-reference="Обрабатываем возможные ошибки">i</span>
+        if(error instanceof ReadingError) {         <span data-reference="Так как все наши ошибки обернуты в ReadError они будут обработаны">i</span>
+            console.log(error.reason.stack);
+        } else {
+            throw error;                            <span data-reference="Неизвестные ошибки проброшены">i</span>
+        }
+    }
+    </pre></code>
+
+    <h3 class="content-subheader">Необработанные ошибки:</h3>
+    <p class="content-text">
+        Если ошибка необработана в коде, скрипт завершится с ошибкой. 
+        Для того чтобы этого не произошло, на верхнем уровне, в браузере необработанные 
+        ошибки можно обработать через «глобальный» обработчик ошибок:
+    </p>
+    <code><pre data-formatted="js">
+    window.onerror = function(message, url, line, col, error) { <span data-reference="Функция браузера window.onerror() служит для обработки ошибок, не обработанных в коде. (line, col, error работают только если js находится между тегами script внутри html файла">i</span>
+        alert(`
+            message: ${message}     <span data-reference="message – сообщение">i</span>
+            url: ${url}             <span data-reference="url - адрес файла с ошибкой">i</span>
+            line: ${line}           <span data-reference="line – номер строки">i</span>
+            col: ${col}             <span data-reference="col – номер колонки">i</span>
+            error: ${error}         <span data-reference="error – объект ошибки">i</span>
+        `);
+    }
+    </pre></code>
+
+    <!-- Содержимое конец -->
+
+    <!-- Панель навигации внутри фрейма -->
+    <div class="content-navigation">
+        <p class="section-indicator">Javascript</p>   
+        <button class="navigation-button" id="navigation-back">◀</button>
+        <button class="navigation-button" id="navigation-reload">🗘</button>
+        <button class="navigation-button" id="navigation-next">▶</button>
+    </div>
+    <p id="reference-display"></p>
+    <script src="../../../js/content.js"></script> 
+</body>
+</html>
