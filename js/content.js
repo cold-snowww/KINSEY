@@ -98,12 +98,15 @@ class CodeFormatter {
             selectorData:       [/\(.+?\)(?=(.*\{))/, 'brown'],
             relSelect:          [/[*~+]|(&gt;)(?=(.*\{))/g, 'red'],
             attrSelect:         [/\[.*?\](?=(.*\{))/gi, 'brown'],
-            selectors:          [/[.#]?[a-z-]+\d?\b(?=(.*\{))/gi, 'lime'],
+            placeholders:       [/%[a-z-]+/g, 'red'],
+            variables:          [/\$[a-z-]+\b/g, 'red'],
+            colors:             [/#[0-9a-f]{3,6}\b/gi, 'orange'],           
+            numbers:            [/(?<!¡)-?\b\d+\.?\d*([a-z]*\b)|%(?!¬)/g, 'fuchsia'],  
             props:              [/[a-z-]+\:/gi, 'cyan'],
+            ampersands:         [/&amp;/g, 'red'],
+            selectors:          [/[\.#%]?[a-z-]+(?=(.*\{))/gim, 'lime'],
             custProps:          [/var\(--[\w-]+\)/g, 'blue'],
             textVals:           [/'[\w./ -]+'/gi, 'orange'],
-            colors:             [/#[0-9a-f]{3,6}\b/gi, 'orange'],           
-            numbers:            [/(?<!¡)-?\b\d+\.?\d*([a-z]*\b)|%(?!¬)/g, 'fuchsia'],
             brackets:           [/[\{\}\)\(]/g, 'yellow'],
         }
     };
@@ -205,6 +208,8 @@ class CodeFormatter {
             .reduce((prev, item) => {
                 return (prev < item) ? prev : item;
             }, 100);
+
+        console.log(this.content);
         
         // Срезаем лишние пробелы в каждой строке
         this.modifyContent(new RegExp(`\^ {${minSpaces}}`, 'gm'), '' );
@@ -222,7 +227,7 @@ class CodeFormatter {
                     if(i <= 999) return `<span class="code-grey">${i++} </span>`;
                 }
             );
-        }
+        }        
     }
 
     // Обратная замена маркеров тегами из tagBase
