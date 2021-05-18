@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../../css/common-styles.css">
+    <link rel="stylesheet" href="../../../css/content-styles.css">
+</head>
+<body>  
+   <!-- 
+        Для добавления форматированного блока кода использовать 
+         <code><pre data-formatted="js">code</pre></code>
+        сниппет - k-preform
+        
+        Для добавления справочного элемента использовать 
+         <span data-reference="Справочная информация">i</span>
+        сниппет - k-info
+
+        Для добавления подзаголовка - k-subheader
+        Для добавления текста - k-text
+        Для добавление внешней ссылки - k-outsidelink
+        Для добавление ссылки маркера - k-buttonlink
+        Для добавления изображения - k-img
+        Для добавления маркера внутри форматированного текста - k-textmark
+    -->    
+
+    <!-- Содержимое начало -->
+    
+    <h2 class="content-header">Инструкции импорта</h2>
+    
+    <p class="content-text" data-formatted="text">Импорт:</p>
+    <p class="content-text" data-formatted="text">SCSS:</p>
+    <code><pre data-formatted="css">
+        @import './chunks/colors';           <span data-reference="Импорт фрагмента _colors.scss">i</span>
+    </pre></code>
+
+    <p class="content-text" data-formatted="text">Вложенный импорт:</p>
+    <p class="content-text" data-formatted="text">SCSS:</p>
+    <code><pre data-formatted="css">
+        #main {
+            @import 'example';
+        }
+    </pre></code>
+
+    <p class="content-text" data-formatted="text">CSS:</p>
+    <code><pre data-formatted="css">
+        #main .example {
+            color: red;
+        }
+    </pre></code>
+    <!-- Содержимое конец -->
+
+    <!-- Панель навигации внутри фрейма -->
+    <div class="content-navigation">
+        <p class="section-indicator">Javascript</p>   
+        <button class="navigation-button" id="navigation-back"></button>
+        <button class="navigation-button" id="navigation-reload"></button>
+        <button class="navigation-button" id="navigation-next"></button>
+    </div>
+    <p id="reference-display"></p>
+    <script src="../../../js/content.js"></script> 
+</body>
+</html>
